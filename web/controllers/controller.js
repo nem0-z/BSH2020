@@ -55,23 +55,38 @@ exports.teamtasks = function (req, res) {
   const query2 =
     "SELECT username FROM user INNER JOIN goal ON goal.creator = user.iduser ORDER BY goal.idgoal;";
 
-  db.query(query1, (err, result) => {
+  db.query(query1, (err, results) => {
     if (err) {
       addResponse(response_body, "400", err.message, undefined);
-    } else if (result.length === 0) {
+    } else if (results.length === 0) {
       addResponse(response_body, "401", "No tasks", undefined);
     } else {
-      addResponse(response_body, "200", "", result);
-      db.query(query2, (err, result) => {
+      addResponse(response_body, "200", "", results);
+      db.query(query2, (err, results) => {
         if (err) {
           addResponse(response_body, "402", "No creator", undefined);
         } else {
-          for (let i = 0; i < result.length; ++i) {
-            response_body.data[i].creatorName = result[i].username;
+          for (let i = 0; i < results.length; ++i) {
+            response_body.data[i].creatorName = results[i].username;
           }
         }
         res.json(response_body);
       });
     }
+  });
+};
+
+exports.appendmytask = function (req, res) {
+  const response_body = {};
+  const { taskID, iduser } = req.body;
+  const query = "UPDATE task SET assignee=? WHERE idtask=?;";
+
+  db.query(query, [iduser, taskID], (err, results) => {
+    if (err) {
+      addResponse(response_body, "400", err.message, undefined);
+    } else {
+      addResponse(response_body, "200", "", results);
+    }
+    res.json(response_body);
   });
 };

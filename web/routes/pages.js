@@ -14,4 +14,8 @@ router.get("/teamtasks", function (req, res) {
   res.render("teamtasks");
 });
 
+router.get("/appendmytask", function (req, res) {
+  res.render("appendmytask");
+});
+
 module.exports = router;

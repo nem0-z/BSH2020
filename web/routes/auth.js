@@ -5,5 +5,6 @@ const router = express.Router();
 router.route("/login").post(controller.login);
 router.route("/mytasks").post(controller.mytasks);
 router.route("/teamtasks").post(controller.teamtasks);
+router.route("/appendmytask").post(controller.appendmytask);
 
 module.exports = router;
