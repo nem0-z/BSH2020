@@ -90,3 +90,24 @@ exports.appendmytask = function (req, res) {
     res.json(response_body);
   });
 };
+
+exports.solution = function (req, res) {
+  const { comment, idtask } = req.body;
+  const response_body = {};
+
+  const query1 = "INSERT INTO solution VALUES(null,CURRENT_DATE,?);";
+  const query2 = "UPDATE task SET resolved=LAST_INSERT_ID() WHERE idtask=?;";
+  db.query(query1, [comment], (err, results) => {
+    if (err) {
+      addResponse(response_body, "400", err.message, undefined);
+    } else {
+      addResponse(response_body, "200", "", results);
+      db.query(query2, [idtask], (err, results) => {
+        if (err) {
+          addResponse(response_body, "401", err.message, undefined);
+        }
+      });
+    }
+    res.json(response_body);
+  });
+};

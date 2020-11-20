@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <title>Solution</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+  <link rel="stylesheet" href="/css/solution.css" />
+  <body>
+    <div class="main">
+    <div class="w3-card-4" style="width: 60%;"></div>
+      <div class="w3-container "  >
+        <h2 id="taskTitle"></h2>
+      </div>
+      <form class="w3-container">
+        <p>
+          <input
+            placeholder="Username"
+            class="w3-input w3-border w3-white"
+            id="username"
+            type="text"
+          />
+        </p>
+        <p></p>
+        <p>
+          <input
+            placeholder="Link to the commit"
+            class="w3-input w3-border w3-white"
+            id="commitLink"
+            type="text"
+          />
+        </p>
+        <p></p>
+        <p>
+          <input
+            placeholder="Alternatively, write a comment on how did you solve your task
+          :)"
+            class="w3-input w3-border w3-white"
+            id="comment"
+            type="text"
+            name="message"
+            onkeyup="countChars(this);"
+          />
+          <p id="charNum"></p>
+        </p>
+        <p style="text-align: center">
+          <button
+            class="w3-btn "
+            id="submitSolution">
+            Submit 
+          </button>
+          <button
+            class="w3-btn "
+            id="returnBtn"
+            type="submit">
+            Return
+          </button>
+        </p>
+      </form>
+    </div>
+  </div>
+    <script src="../solution.js"></script>
+  </body>
+</html>
+

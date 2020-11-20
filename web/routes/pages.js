@@ -18,4 +18,8 @@ router.get("/appendmytask", function (req, res) {
   res.render("appendmytask");
 });
 
+router.get("/solution", function (req, res) {
+  res.render("solution");
+});
+
 module.exports = router;
