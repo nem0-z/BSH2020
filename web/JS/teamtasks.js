@@ -1,46 +1,25 @@
 window.onload = () => {
-    const link = "http://localhost:3000/auth/teamtasks";
-    const xhr = new XMLHttpRequest();
-
     const userRole = localStorage.getItem("role");
-
-    xhr.open("POST", link, true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-
-    xhr.onerror = function () {
-        alert("Network error");
-    };
-
-    xhr.onload = function () {
-        if (xhr.status == 200 && xhr.readyState == 4) {
-            const data = JSON.parse(this.response);
-            if (data.status == 200) {
-                const taskList = data.data;
-                taskList.forEach(task => {
-                    addNewTask(
-                        task.idtask,
-                        task.name,
-                        task.description,
-                        new Date(task.dateCreated).toLocaleDateString(),
-                        task.creatorName,
-                        task.resolved,
-                        task.type,
-                        task.assignee,
-                        task.username)
-                });
-                if (userRole == 2) {
-                    const leaderBtn = document.getElementById("leaderAddBtn");
-                    leaderBtn.style.display = "block";
-                    leaderBtn.addEventListener("click", makeNewTask);
-                }
-            } else {
-                alert(data.message);
+    sendHttpRequest("POST", "http://localhost:3000/auth/teamtasks")
+        .then(taskList => {
+            taskList.forEach(task => {
+                addNewTask(
+                    task.idtask,
+                    task.name,
+                    task.description,
+                    new Date(task.dateCreated).toLocaleDateString(),
+                    task.creatorName,
+                    task.resolved,
+                    task.type,
+                    task.assignee,
+                    task.username)
+            });
+            if (userRole == 2) {
+                const leaderBtn = document.getElementById("leaderAddBtn");
+                leaderBtn.style.display = "block";
+                leaderBtn.addEventListener("click", makeNewTask);
             }
-        } else {
-            alert("Server error");
-        }
-    };
-    xhr.send();
+        }).catch(error => alert(error));
 };
 
 function showSolution(event) {

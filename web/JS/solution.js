@@ -37,29 +37,11 @@ submitButton.addEventListener("click", (e) => {
       comment: comment,
       idtask: idtask,
     };
-    const link = "http://localhost:3000/auth/solution";
-    const xhr = new XMLHttpRequest();
 
-    xhr.open("POST", link, true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-
-    xhr.onerror = function () {
-      alert("Network error");
-    };
-
-    xhr.onload = function () {
-      if (xhr.status == 200 && xhr.readyState == 4) {
-        var data = JSON.parse(this.response);
-        if (data.status == 200) {
-          window.location.assign("/mytasks");
-        } else {
-          alert(data.message);
-        }
-      } else {
-        alert("Server error");
-      }
-    };
-    xhr.send(JSON.stringify(data));
+    sendHttpRequest("POST", "http://localhost:3000/auth/solution", data)
+      .then(responseData => {
+        window.location.assign("/mytasks");
+      }).catch(error => alert(error));
   }
 });
 
