@@ -1,5 +1,7 @@
+var type = null;
 const submitButton = document.getElementById("submitSolution");
 const returnButton = document.getElementById("returnBtn");
+const typeButton = document.getElementById("typeBtn");
 
 const taskTitle = document.getElementById("taskTitle");
 taskTitle.appendChild(document.createTextNode("Create new task"));
@@ -8,15 +10,14 @@ submitButton.addEventListener("click", (e) => {
   e.preventDefault();
 
   const title = document.getElementById("title").value;
-  const urgent = document.getElementById("urgency").value; //make this a checkbox, it's a boolean
+  let urgent = document.getElementById("urgency").checked;
+
   const assignee = document.getElementById("assignee").value;
   const description = document.getElementById("comment").value;
   const iduser = localStorage.getItem("id");
-  const type = 2;
-
   const data = {
     title: title,
-    urgent: urgent,
+    urgent: urgent ? 1 : 0,
     assignee: assignee,
     description: description,
     iduser: iduser,
@@ -49,4 +50,15 @@ function countChars(obj) {
   } else {
     document.getElementById("charNum").innerHTML = strLength + "/" + maxLength;
   }
+}
+
+function typeOfTask(event) {
+  const value = event.innerHTML;
+  if (value == "Feature") type = 1;
+  else if (value == "Bug") type = 2;
+  else if (value == "Report") type = 3;
+  else if (value == "Support") type = 4;
+  else type = 5;
+
+  typeButton.innerHTML = value;
 }

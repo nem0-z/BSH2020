@@ -4,6 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
   <link rel="stylesheet" href="/css/solution.css" />
+  <link rel="stylesheet" href="/css/checkbox.css" />
   <body>
     <div class="main">
     <div class="w3-card-4" style="width: 60%;"></div>
@@ -11,6 +12,17 @@
         <h2 id="taskTitle"></h2>
       </div>
       <form class="w3-container">
+     
+        <div class="w3-dropdown-hover" style="float: left; background-color: #04aaaa;">
+          <button id="typeBtn" class="w3-button">TYPE</button>
+          <div class="w3-dropdown-content w3-bar-block w3-border">
+            <a  class="w3-bar-item w3-button"onclick="typeOfTask(this)">Feature</a>
+            <a  class="w3-bar-item w3-button" onclick="typeOfTask(this)">Bug</a>
+            <a  class="w3-bar-item w3-button"onclick="typeOfTask(this)">Report</a>
+            <a  class="w3-bar-item w3-button" onclick="typeOfTask(this)">Support</a>
+            <a  class="w3-bar-item w3-button" onclick="typeOfTask(this)">Maintenance</a>
+          </div>
+        </div>
         <p>
           <input
             placeholder="Task title"
@@ -20,14 +32,6 @@
           />
         </p>
         <p></p>
-        <p>
-          <input
-            placeholder="Type of urgency"
-            class="w3-input w3-border w3-white"
-            id="urgency"
-            type="text"
-          />
-        </p>
         <p></p>
         <p>
           <input
@@ -49,6 +53,10 @@
           />
           <p id="charNum"></p>
         </p>
+        <label class="container" style="float: left;">Urgent
+          <input id="urgency" type="checkbox" checked="checked">
+          <span class="checkmark"></span>
+        </label>
         <p style="text-align: center">
           <button
             class="w3-btn "
@@ -63,6 +71,7 @@
           </button>
         </p>
       </form>
+      
     </div>
   </div>
     <script src="../makenewtask.js"></script>
