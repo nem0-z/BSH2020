@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--CSS za task listu-->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+
+    <!-- Custom Theme files -->
+    <link href="/css/mytasks.css" rel="stylesheet" type="text/css" />
+    <link href="/css/font-awesome.css" rel="stylesheet" />
+
+    <title>MyTasks</title>
+  </head>
+  <body>
+    <!-- navigation bar -->
+    <%-include('partials/navbar');%>
+    <!-- //navigation bar -->
+
+    <!-- main -->
+    <div class="main-agileits">
+      <div class="container">
+        <!-- Task list-->
+        <ul id="myTasksList"></ul>
+      </div>
+    </div>
+    <!-- //main -->
+    <!-- js -->
+    <script src="../addMyTask.js"></script>
+    <script src="../mytasks.js"></script>
+  </body>
+</html>

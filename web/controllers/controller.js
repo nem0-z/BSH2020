@@ -10,12 +10,40 @@ exports.login = function (req, res) {
       addResponse(response_body, "400", err.message, undefined);
     } else {
       if (results.length == 0) {
-        addResponse(response_body, "401", "User does not exist!", undefined);
+        addResponse(
+          response_body,
+          "401",
+          "User name or password is incorrect.",
+          undefined
+        );
       } else {
         addResponse(response_body, "200", "", results[0]);
       }
     }
 
+    res.json(response_body);
+  });
+};
+
+exports.mytasks = function (req, res) {
+  const response_body = {};
+
+  const iduser = req.body.iduser;
+
+  const query =
+    "SELECT goal.*, task.*, user.username as taskCreator FROM goal INNER JOIN task " +
+    "ON goal.idgoal = task.idgoal LEFT JOIN user on goal.creator=user.iduser WHERE assignee=?;";
+
+  db.query(query, [iduser], function (err, results) {
+    if (err) {
+      addResponse(response_body, "400", err.message, undefined);
+    } else {
+      if (results.length === 0) {
+        addResponse(response_body, "401", "No tasks", undefined);
+      } else {
+        addResponse(response_body, "200", "", results);
+      }
+    }
     res.json(response_body);
   });
 };
