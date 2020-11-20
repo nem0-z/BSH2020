@@ -14,7 +14,7 @@ window.onload = function () {
           new Date(task.dateCreated).toLocaleDateString(),
           task.taskCreator,
           task.resolved,
-          task.type
+          task.urgency
         );
       });
     })

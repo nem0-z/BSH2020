@@ -5,7 +5,7 @@ function addNewTask(
   newDate,
   newCreator,
   resolved,
-  type,
+  urgent,
   assignee,
   username
 ) {
@@ -24,7 +24,7 @@ function addNewTask(
   let src = "nonurgent.png";
   if (resolved !== null) {
     src = "done.png";
-  } else if (type === 1) {
+  } else if (urgent) {
     src = "urgent.png";
   }
   img2.setAttribute("src", src);

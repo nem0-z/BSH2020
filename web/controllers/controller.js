@@ -172,7 +172,7 @@ exports.makenewtask = function (req, res) {
               //Callback hell
               const query3 =
                 "INSERT INTO task VALUES(null,?,null,CURRENT_DATE,LAST_INSERT_ID(),?,?);";
-              db.query(query3, [urgent, assigneeID, type], (err, results) => {
+              db.query(query3, [type, assigneeID, urgent], (err, results) => {
                 if (err) {
                   addResponse(response_body, "403", err.message, undefined);
                 } else {

@@ -10,7 +10,7 @@ window.onload = () => {
                     new Date(task.dateCreated).toLocaleDateString(),
                     task.creatorName,
                     task.resolved,
-                    task.type,
+                    task.urgency,
                     task.assignee,
                     task.username)
             });
