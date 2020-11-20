@@ -66,7 +66,7 @@ exports.teamtasks = function (req, res) {
         if (err) {
           addResponse(response_body, "402", "No creator", undefined);
         } else {
-          for (let i = 0; i < results.length; ++i) {
+          for (let i = 0; i < results.length - 1; ++i) {
             response_body.data[i].creatorName = results[i].username;
           }
         }
