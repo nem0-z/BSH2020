@@ -26,4 +26,8 @@ router.get("/showsolution", function (req, res) {
   res.render("showsolution");
 });
 
+router.get("/makenewtask", function (req, res) {
+  res.render("makenewtask");
+});
+
 module.exports = router;

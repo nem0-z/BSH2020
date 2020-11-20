@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <title>Solution</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+  <link rel="stylesheet" href="/css/solution.css" />
+  <body>
+    <div class="main">
+    <div class="w3-card-4" style="width: 60%;"></div>
+      <div class="w3-container "  >
+        <h2 id="taskTitle"></h2>
+      </div>
+      <form class="w3-container">
+        <p>
+          <input
+            placeholder="Task title"
+            class="w3-input w3-border w3-white"
+            id="title"
+            type="text"
+          />
+        </p>
+        <p></p>
+        <p>
+          <input
+            placeholder="Type of urgency"
+            class="w3-input w3-border w3-white"
+            id="urgency"
+            type="text"
+          />
+        </p>
+        <p></p>
+        <p>
+          <input
+            placeholder="Assignee (leave empty if none)"
+            class="w3-input w3-border w3-white"
+            id="assignee"
+            type="text"
+          />
+        </p>
+        <p></p>
+        <p>
+          <input
+            placeholder="Task description"
+            class="w3-input w3-border w3-white"
+            id="comment"
+            type="text"
+            name="message"
+            onkeyup="countChars(this);"
+          />
+          <p id="charNum"></p>
+        </p>
+        <p style="text-align: center">
+          <button
+            class="w3-btn "
+            id="submitSolution">
+            Confirm 
+          </button>
+          <button
+            class="w3-btn "
+            id="returnBtn"
+            type="submit">
+            Return
+          </button>
+        </p>
+      </form>
+    </div>
+  </div>
+    <script src="../makenewtask.js"></script>
+    <script src="../sendHttpRequest.js"></script>
+  </body>
+</html>
+

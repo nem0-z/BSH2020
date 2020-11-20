@@ -8,5 +8,6 @@ router.route("/teamtasks").post(controller.teamtasks);
 router.route("/appendmytask").post(controller.appendmytask);
 router.route("/solution").post(controller.solution);
 router.route("/showsolution").post(controller.showsolution);
+router.route("/makenewtask").post(controller.makenewtask);
 
 module.exports = router;
