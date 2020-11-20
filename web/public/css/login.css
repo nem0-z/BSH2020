@@ -1,0 +1,31 @@
+.login-agileits-top p {
+  text-align: left;
+}
+.login-form {
+  height: 300px;
+  border-radius: 32px;
+  text-align: center;
+  background-color: white !important;
+}
+
+#inputUsername,
+#inputPassword {
+  border: 0.5px solid gray !important;
+}
+
+.login-form .login-agileits-top p {
+  font-weight: 500 !important;
+  font-size: 18px;
+  color: black !important;
+}
+
+#submitButton {
+  height: 50px;
+  background-color: #04aaaa;
+  border-radius: 32px;
+  font-size: 18px;
+}
+
+#submitButton:hover {
+  background-color: black;
+}
