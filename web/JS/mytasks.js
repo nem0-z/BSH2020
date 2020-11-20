@@ -4,7 +4,7 @@ window.onload = function () {
     iduser,
   };
   sendHttpRequest("POST", "http://localhost:3000/auth/mytasks", data)
-    .then(taskList => {
+    .then((taskList) => {
       localStorage.setItem("tList", JSON.stringify(taskList));
       taskList.forEach((task) => {
         addNewTask(
@@ -14,11 +14,12 @@ window.onload = function () {
           new Date(task.dateCreated).toLocaleDateString(),
           task.taskCreator,
           task.resolved,
-          task.urgency
+          task.urgency,
+          task.type
         );
       });
     })
-    .catch(error => alert(error));
+    .catch((error) => alert(error));
 };
 
 var myTasksList = document.getElementById("myTasksList");
