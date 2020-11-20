@@ -22,4 +22,8 @@ router.get("/solution", function (req, res) {
   res.render("solution");
 });
 
+router.get("/showsolution", function (req, res) {
+  res.render("showsolution");
+});
+
 module.exports = router;

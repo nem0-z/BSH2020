@@ -1,0 +1,30 @@
+body {
+  background-color: #049494;
+  text-align: center;
+}
+.main {
+  margin: 5% 10%;
+  height: fit-content;
+  width: 80%;
+  border-radius: 32px;
+  overflow: hidden;
+  background-color: white;
+}
+#returnBtn {
+  height: 50px;
+  background-color: #04aaaa;
+  border-radius: 32px;
+  font-size: 18px;
+  color: white;
+  margin: 40px;
+  width: 25%;
+}
+
+#returnBtn:hover {
+  background-color: red;
+  transition: background-color 0.7s ease;
+}
+
+#comment {
+  height: fit-content;
+}

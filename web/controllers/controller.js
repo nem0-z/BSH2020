@@ -111,3 +111,25 @@ exports.solution = function (req, res) {
     res.json(response_body);
   });
 };
+
+exports.showsolution = function (req, res) {
+  const response_body = {};
+
+  const idtask = req.body.idtask;
+
+  const query =
+    "SELECT * FROM solution INNER JOIN task ON solution.idsolution = task.resolved INNER JOIN user ON task.assignee= user.iduser WHERE idtask=?;";
+
+  db.query(query, [idtask], function (err, results) {
+    if (err) {
+      addResponse(response_body, "400", err.message, undefined);
+    } else {
+      if (results.length === 0) {
+        addResponse(response_body, "401", "No solution", undefined);
+      } else {
+        addResponse(response_body, "200", "", results);
+      }
+    }
+    res.json(response_body);
+  });
+};
