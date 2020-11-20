@@ -30,4 +30,8 @@ router.get("/makenewtask", function (req, res) {
   res.render("makenewtask");
 });
 
+router.get("/home", function (req, res) {
+  res.render("homepage");
+});
+
 module.exports = router;
