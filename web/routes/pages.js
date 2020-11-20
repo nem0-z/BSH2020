@@ -10,4 +10,8 @@ router.get("/mytasks", function (req, res) {
   res.render("mytasks");
 });
 
+router.get("/teamtasks", function (req, res) {
+  res.render("teamtasks");
+});
+
 module.exports = router;

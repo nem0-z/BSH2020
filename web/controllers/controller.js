@@ -47,3 +47,31 @@ exports.mytasks = function (req, res) {
     res.json(response_body);
   });
 };
+
+exports.teamtasks = function (req, res) {
+  const response_body = {};
+  const query1 =
+    "SELECT * FROM task INNER JOIN goal ON task.idgoal = goal.idgoal LEFT JOIN user ON task.assignee = user.iduser;";
+  const query2 =
+    "SELECT username FROM user INNER JOIN goal ON goal.creator = user.iduser ORDER BY goal.idgoal;";
+
+  db.query(query1, (err, result) => {
+    if (err) {
+      addResponse(response_body, "400", err.message, undefined);
+    } else if (result.length === 0) {
+      addResponse(response_body, "401", "No tasks", undefined);
+    } else {
+      addResponse(response_body, "200", "", result);
+      db.query(query2, (err, result) => {
+        if (err) {
+          addResponse(response_body, "402", "No creator", undefined);
+        } else {
+          for (let i = 0; i < result.length; ++i) {
+            response_body.data[i].creatorName = result[i].username;
+          }
+        }
+        res.json(response_body);
+      });
+    }
+  });
+};
