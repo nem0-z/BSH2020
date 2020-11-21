@@ -10,10 +10,10 @@ var remTime = document.getElementById("remTime");
 var remIntervalTime = document.getElementById("remIntervalTime");
 var buttonRepeating = document.getElementById("show-password");
 
-//function for creating list item in reminder list
+// function for creating list item in reminder list
 function createReminder(id, idreminder, type, name, description, date, active) {
-  //type = 1 => onetime reminder
-  //type = 0 => repeating reminder
+  // type = 1 => onetime reminder
+  // type = 0 => repeating reminder
 
   const reminder = document.createElement("li");
   reminder.setAttribute("class", "w3-bar");
@@ -62,14 +62,17 @@ function createReminder(id, idreminder, type, name, description, date, active) {
   const dateSpan = document.createElement("span");
   dateSpan.setAttribute("class", "time w3-bar-item w3-right w3-large");
   if (type) {
+    // one time
     dateSpan.classList.add("onetime");
     dateSpan.setAttribute("data-date", new Date(date));
   } else {
+    // repeating
     dateSpan.classList.add("repeating");
     dateSpan.dataset.timestamps = date;
   }
   reminder.appendChild(dateSpan);
 
+  // repeating
   if (!type) {
     const slider = document.createElement("label");
     slider.setAttribute("class", "switch");
@@ -145,7 +148,9 @@ function updateTime(date) {
   return text;
 }
 
+// set the time left on each reminder
 function setAllTimers() {
+  // for one time reminders
   let onetimes = document.getElementsByClassName("onetime");
   for (const element of onetimes) {
     let time = new Date(element.dataset.date).getTime();
@@ -162,6 +167,7 @@ function setAllTimers() {
       reminderList.removeChild(element.parentNode);
     }
   }
+  // for repeating reminders
   let repeatings = document.getElementsByClassName("repeating");
   for (const element of repeatings) {
     let timestamps = Array.from(element.dataset.timestamps.split(","), (x) =>
@@ -190,27 +196,31 @@ function setAllTimers() {
   }
 }
 
+// function for opening modal
 function openReminderModal(idreminder, name, description, dateToEdit) {
   addReminderModal.style.display = "block";
   if (idreminder) {
-    //edit
+    // edit
     remName.value = name;
     remDescription.value = description;
     if (dateToEdit != "") remTime.value = dateToEdit;
   } else {
-    //add
+    // add
     document.getElementById("remIntervalTime").disabled = true;
-
+    
     submitButton.onclick = function () {
+      // get values from modal
       var txt_name = remName.value;
       var txt_description = remDescription.value;
       var txt_time = remTime.value;
       var txt_interval = remIntervalTime.value;
 
+      // change date and time format
       const remDate = new Date(new Date(txt_time).getTime() + 3600 * 1000)
         .toISOString()
         .slice(0, 19)
         .replace("T", " ");
+
       // puno if-ova nekih da vidim jel sve sto treba bit tu
       // jos ifova
       // else
@@ -224,7 +234,10 @@ function openReminderModal(idreminder, name, description, dateToEdit) {
         type: !buttonRepeating.checked,
         time: txt_interval,
       };
+
       console.log(data);
+
+      // insert reminder into db and reload
       sendHttpRequest("POST", "http://localhost:3000/auth/addReminder", data)
         .then((responseData) => {
           location.reload();

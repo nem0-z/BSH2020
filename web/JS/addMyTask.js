@@ -8,9 +8,11 @@ function addNewTask(
   urgent,
   type
 ) {
+
   // create new task item
   const newTask = document.createElement("li");
   newTask.setAttribute("class", "taskItem");
+  // check if the task is done
   if (resolved) {
     newTask.style.opacity = "0.5";
   }
@@ -20,6 +22,7 @@ function addNewTask(
   const taskHeader = document.createElement("div");
   taskHeader.setAttribute("class", "taskHeader");
 
+  // choose the task icon depending on the type of task
   const img2 = document.createElement("img");
   if (type === 1) {
     src = "feature.png";
@@ -35,10 +38,11 @@ function addNewTask(
   img2.setAttribute("src", src);
   img2.setAttribute("style", "width:85px");
 
+  // add taskName
   const taskName = document.createElement("h3");
   taskName.setAttribute("class", "taskName");
   taskName.innerHTML = newName;
-
+  // add taskID
   const taskID = document.createElement("span");
   taskID.setAttribute("class", "taskID");
   taskID.innerHTML = "ID: " + newID;
@@ -54,6 +58,7 @@ function addNewTask(
   pbar.setAttribute("class", "w3-light-grey w3-round");
   pbar.style.margin = "15px";
 
+  // add task progress to progressBar
   const myBar = document.createElement("div");
   myBar.setAttribute("class", "");
   if (resolved !== null) {
@@ -72,9 +77,10 @@ function addNewTask(
   const taskDesc = document.createElement("div");
   taskDesc.setAttribute("class", "taskDescription");
   taskDesc.innerHTML = newDescription;
-
+  // add taskDescription
   newTask.appendChild(taskDesc);
 
+  // create and add taskCreator
   const creator = document.createElement("div");
   creator.setAttribute("class", "creator");
   const creatorName = document.createElement("span");
@@ -88,6 +94,7 @@ function addNewTask(
   const date = document.createElement("span");
   date.innerHTML = newDate;
 
+  // create add/show solution button
   const btnDone = document.createElement("button");
   btnDone.setAttribute("class", "w3-btn w3-round-xxlarge btnDone");
   btnDone.setAttribute("id", "btnDone" + newID);
