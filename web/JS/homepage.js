@@ -53,6 +53,7 @@ function createReminder(id, idreminder, type, name, description, date) {
     dateSpan.setAttribute("data-date", new Date(date));
   } else {
     dateSpan.classList.add("repeating");
+    dateSpan.dataset.timestamps = date;
   }
   reminder.appendChild(dateSpan);
 
@@ -102,6 +103,32 @@ function setAllTimers() {
       reminderList.removeChild(element.parentNode);
     }
   }
+  let repeatings = document.getElementsByClassName("repeating");
+  for (const element of repeatings) {
+    let timestamps = Array.from(element.dataset.timestamps.split(","), (x) =>
+      parseInt(x)
+    );
+    let now = new Date().getTime();
+    let last = timestamps.length - 1;
+    while (timestamps[last] < now) {
+      timestamps.pop();
+      last--;
+      element.dataset.timestamps = timestamps;
+    }
+    let text = updateTime(timestamps[last]);
+    if (text != "0s") {
+      element.textContent = text;
+    } else {
+      let name = element.parentNode.getElementsByClassName("name")[0]
+        .textContent;
+      let description = element.parentNode.getElementsByClassName(
+        "description"
+      )[0].textContent;
+      alert(name);
+
+      if (timestamps.lenght == 1) reminderList.removeChild(element.parentNode);
+    }
+  }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -111,13 +138,26 @@ document.addEventListener("DOMContentLoaded", function () {
   )
     .then((responseData) => {
       responseData.forEach((element) => {
+        let timeBegin = new Date(element.dateBegin).getTime();
+        let now = new Date().getTime();
+        while (timeBegin < now) {
+          timeBegin += element.time * 60000;
+        }
+        let timestamps = new Array();
+        let endTime = timeBegin + 43200000;
+        while (timeBegin < endTime) {
+          timestamps.push(timeBegin);
+          timeBegin += element.time * 60000;
+        }
+        timestamps.reverse();
+
         const reminder = createReminder(
           element.idrepeating,
           element.idreminder,
           0,
           element.name,
           element.description,
-          element.dateBegin
+          timestamps
         );
         reminderList.appendChild(reminder);
       });
