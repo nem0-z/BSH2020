@@ -1,5 +1,6 @@
 var id = localStorage.getItem("id");
-var reminderList = document.getElementById("reminderList");
+var repeatingReminderList = document.getElementById("repeatingReminderList");
+var onetimeReminderList = document.getElementById("onetimeReminderList");
 var submitButton = document.getElementById("submitButton");
 var addReminderModal = document.getElementById("myModal");
 var addReminderBtn = document.getElementById("addReminder");
@@ -365,7 +366,7 @@ document.addEventListener("DOMContentLoaded", function () {
           timestamps,
           active
         );
-        reminderList.appendChild(reminder);
+        repeatingReminderList.appendChild(reminder);
       });
     })
     .catch((error) => alert(error));
@@ -386,7 +387,7 @@ document.addEventListener("DOMContentLoaded", function () {
             element.description,
             element.dateBegin
           );
-          reminderList.appendChild(reminder);
+          onetimeReminderList.appendChild(reminder);
         }
       });
     })
