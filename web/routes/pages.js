@@ -29,5 +29,9 @@ router.get("/showsolution", function (req, res) {
 router.get("/makenewtask", function (req, res) {
   res.render("makenewtask");
 });
+  
+router.get("/calendar", function (req, res) {
+  res.render("calendar");
+});
 
 module.exports = router;
