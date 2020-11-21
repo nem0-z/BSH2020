@@ -1,4 +1,4 @@
-var type = null;
+let type = null;
 const submitButton = document.getElementById("submitSolution");
 const returnButton = document.getElementById("returnBtn");
 const typeButton = document.getElementById("typeBtn");
@@ -9,12 +9,13 @@ taskTitle.appendChild(document.createTextNode("Create new task"));
 submitButton.addEventListener("click", (e) => {
   e.preventDefault();
 
+  //Parse user input and prepare data for http request
   const title = document.getElementById("title").value;
   let urgent = document.getElementById("urgency").checked;
-
   const assignee = document.getElementById("assignee").value;
   const description = document.getElementById("comment").value;
   const iduser = localStorage.getItem("id");
+
   const data = {
     title: title,
     urgent: urgent ? 1 : 0,
@@ -26,7 +27,7 @@ submitButton.addEventListener("click", (e) => {
 
   sendHttpRequest("POST", "http://localhost:3000/auth/makenewtask", data)
     .then((responseData) => {
-      window.location.assign("/teamtasks");
+      window.location.assign(document.referrer);
     })
     .catch((error) => alert(error));
 });
@@ -36,6 +37,7 @@ returnButton.addEventListener("click", (e) => {
   window.history.back();
 });
 
+//Limit char count on description input
 function countChars(obj) {
   const maxLength = 1000;
   const strLength = obj.value.length;

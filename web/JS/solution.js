@@ -10,10 +10,12 @@ const idtask = localStorage.getItem("taskID");
 
 const taskName = localStorage.getItem("taskName");
 const taskTitle = document.getElementById("taskTitle");
-taskTitle.appendChild(document.createTextNode(taskName));
+taskTitle.appendChild(document.createTextNode(taskName)); //Set real task title instead of an ID
 
 submitButton.addEventListener("click", (e) => {
   e.preventDefault();
+
+  //Parse user input
   const username = inputUsername.value;
   const commitURL = commitLink.value;
   const userComment = comment.value;
@@ -23,8 +25,8 @@ submitButton.addEventListener("click", (e) => {
   } else if (commitURL === "" && userComment === "") {
     alert("I need either your comment or a commit url");
   } else {
+    //Jam commit URL and user comment into one \n separated string
     let comment = "";
-
     if (commitURL === "") {
       comment = userComment;
     } else if (userComment === "") {
@@ -38,10 +40,12 @@ submitButton.addEventListener("click", (e) => {
       idtask: idtask,
     };
 
+    //Send http request and if all good, go back to where user came from
     sendHttpRequest("POST", "http://localhost:3000/auth/solution", data)
-      .then(responseData => {
-        window.location.assign("/mytasks");
-      }).catch(error => alert(error));
+      .then((responseData) => {
+        window.location.assign(document.referrer);
+      })
+      .catch((error) => alert(error));
   }
 });
 
@@ -50,6 +54,7 @@ returnButton.addEventListener("click", (e) => {
   window.history.back();
 });
 
+//Limit char count on description input
 function countChars(obj) {
   const maxLength = 1000;
   const strLength = obj.value.length;
