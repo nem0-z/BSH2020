@@ -189,3 +189,35 @@ exports.makenewtask = function (req, res) {
     }
   });
 };
+
+exports.getOnetimeReminders = function (req, res) {
+  const response_body = {};
+  const creator = req.query.creator;
+
+  const query =
+    "SELECT reminder.*, onetime.idonetime FROM reminder INNER JOIN onetime ON reminder.idreminder = onetime.idreminder WHERE reminder.creator=?;";
+  db.query(query, [creator], function (err, results) {
+    if (err) {
+      addResponse(response_body, "400", err.message, undefined);
+    } else {
+      addResponse(response_body, "200", "success", results);
+    }
+    res.json(response_body);
+  });
+};
+
+exports.getRepeatingReminders = function (req, res) {
+  const response_body = {};
+  const creator = req.query.creator;
+
+  const query =
+    "SELECT reminder.*, repeating.idrepeating, repeating.time, repeating.active FROM reminder INNER JOIN repeating ON repeating.idreminder = reminder.idreminder WHERE reminder.creator=?;";
+  db.query(query, [creator], function (err, results) {
+    if (err) {
+      addResponse(response_body, "400", err.message, undefined);
+    } else {
+      addResponse(response_body, "200", "success", results);
+    }
+    res.json(response_body);
+  });
+};
