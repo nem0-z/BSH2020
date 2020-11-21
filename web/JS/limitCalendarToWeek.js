@@ -7,5 +7,5 @@ function limitCalendarToWeek()
         today.setHours(-24 * (day - 1));   
     const days = ["spanMonday","spanTuesday","spanWednesday","spanThursday","spanFriday"];            
     for(let i = 0; i<5 ;++i,today.setDate(today.getDate()+1))                       
-    document.getElementById(days[i]).innerHTML+="<br>"+today.getDate()+"."+today.getMonth()+"."+today.getFullYear();
+    document.getElementById(days[i]).innerHTML+="<br>"+today.getDate()+"."+(today.getMonth()+1)+"."+today.getFullYear();
 }

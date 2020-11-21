@@ -10,7 +10,8 @@ sendHttpRequest("POST","http://localhost:3000/auth/calendar",data)
           element.satKraj,
           element.minPocetak,
           element.minKraj,
-          element.day
+          element.day,
+          element.urgency
         );
         
       })

@@ -273,7 +273,7 @@ exports.calendar = function (req, res) {
     "SELECT date, DAYNAME(timeBegin) AS day, " +
     "LPAD(HOUR(timeBegin), 2, 0) AS satPocetak, LPAD(MINUTE(timeBegin), 2, 0) as minPocetak, " +
     "LPAD(HOUR(timeEnd), 2, 0) AS satKraj, LPAD(MINUTE(timeEnd), 2, 0) as minKraj, " +
-    "name, description FROM TimeMaster.event " +
+    "name, description, urgency FROM TimeMaster.event " +
     "INNER JOIN goal ON goal.idgoal = event.idgoal " +
     "INNER JOIN task ON task.idgoal = goal.idgoal " +
     "WHERE assignee = ? AND " +
