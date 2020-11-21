@@ -274,7 +274,9 @@ exports.calendar = function (req, res) {
     "LPAD(HOUR(timeEnd), 2, 0) AS satKraj, LPAD(MINUTE(timeEnd), 2, 0) as minKraj, " +
     "name, description FROM TimeMaster.event " +
     "INNER JOIN goal ON goal.idgoal = event.idgoal " +
-    "WHERE creator = ?;";
+    "INNER JOIN task ON task.idgoal = goal.idgoal " +
+    "WHERE assignee = ? AND " +
+    "YEARWEEK(timeBegin)=YEARWEEK(NOW());";
 
   //const idUser = localStorage.getItem("id");
   const { idUser } = req.body;
@@ -294,7 +296,7 @@ exports.changeReminderActivity = function (req, res) {
   const response_body = {};
   const { idrepeating, active } = req.body;
 
-  let query = "UPDATE repeating SET active = ? WHERE idrepeating = ?";
+  let query = "UPDATE repeating SET active = ? WHERE idrepeating = ?;";
 
   db.query(query, [active, idrepeating], function (err, result) {
     if (err) {
@@ -305,6 +307,7 @@ exports.changeReminderActivity = function (req, res) {
     res.json(response_body);
   });
 };
+
 
 exports.addtasktocalendar = function (req, res) {
   const response_body = {};
@@ -327,4 +330,25 @@ exports.addtasktocalendar = function (req, res) {
     }
     res.json(response_body);
   });
+
+exports.editReminder = function (req, res) {
+  const response_body = {};
+  const { idreminder, name, description } = req.body;
+
+  let query =
+    "UPDATE reminder SET name = ?, description = ? WHERE idreminder = ?;";
+
+  db.query(
+    query,
+    [name, description, idreminder],
+    function (err, result) {
+      if (err) {
+        addResponse(response_body, "400", err.message, undefined);
+      } else {
+        addResponse(response_body, "200", "successful", undefined);
+      }
+      res.json(response_body);
+    }
+  );
+
 };

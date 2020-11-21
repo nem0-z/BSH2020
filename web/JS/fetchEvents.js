@@ -15,6 +15,7 @@ sendHttpRequest("POST","http://localhost:3000/auth/calendar",data)
         
       })
       calendarMain(); 
+      limitCalendarToWeek();
 }).catch(error => {
     alert(error);
 });
