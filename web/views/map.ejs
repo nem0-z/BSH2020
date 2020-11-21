@@ -16,13 +16,25 @@
       <li>
         <a style="color: #04aaaa">SHOW ME: </a>
       </li>
-      <li><a>Cafe</a></li>
-      <li><a>Bar</a></li>
-      <li><a>Restaurant</a></li>
-      <li><a>Supermarket</a></li>
-      <li><a>Electronic Store</a></li>
-      <li><a>ATM</a></li>
-      <li><input class="radius" placeholder="Enter radius" /></li>
+      <li><a onclick="setMarkerType(this)">Cafe</a></li>
+      <li><a onclick="setMarkerType(this)">Bar</a></li>
+      <li><a onclick="setMarkerType(this)">Restaurant</a></li>
+      <li><a onclick="setMarkerType(this)">Supermarket</a></li>
+      <li><a onclick="setMarkerType(this)">Electronic Store</a></li>
+      <li><a onclick="setMarkerType(this)">ATM</a></li>
+      <li>
+        <input id="radius" class="radius" placeholder="Enter radius" />
+      </li>
+      <li>
+        <button
+          id="showMarkerBtn"
+          class="w3-btn w3-round"
+          style="float: left; background-color: #04aaaa"
+          type="submit"
+        >
+          GO
+        </button>
+      </li>
     </ul>
 
     <div id="map"></div>

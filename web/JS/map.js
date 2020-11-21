@@ -87,3 +87,15 @@ function createMarker(accessPoint) {
   });
   return marker;
 }
+
+function setMarkerType(event) {
+  return event.innerHTML.toLowerCase();
+}
+
+const showMarkerBtn = document.getElementById("showMarkerBtn");
+
+showMarkerBtn.addEventListener("click", (e) => {
+  const radius = document.getElementById("radius").value;
+
+  // call your function
+});
