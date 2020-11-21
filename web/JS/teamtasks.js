@@ -74,6 +74,7 @@ function makeNewTask(event) {
 
 returnBtn.addEventListener("click", () => {
   modal.style.display = "none";
+  location.reload();
 });
 
 // create date, begin and end time then send http request
