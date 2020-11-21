@@ -134,7 +134,6 @@ exports.showsolution = function (req, res) {
   });
 };
 
-
 exports.makenewtask = function (req, res) {
   const response_body = {};
   const { title, urgent, assignee, description, iduser, type } = req.body;
@@ -270,26 +269,40 @@ exports.addReminder = function (req, res) {
 exports.calendar = function (req, res) {
   const response_body = {};
   console.log("test");
-  const query = "SELECT date, DAYNAME(timeBegin) AS day, "+
-  "LPAD(HOUR(timeBegin), 2, 0) AS satPocetak, LPAD(MINUTE(timeBegin), 2, 0) as minPocetak, "+
-  "LPAD(HOUR(timeEnd), 2, 0) AS satKraj, LPAD(MINUTE(timeEnd), 2, 0) as minKraj, "+
-  "name, description FROM TimeMaster.event "+
-  "INNER JOIN goal ON goal.idgoal = event.idgoal "+
-  "WHERE creator = ?;";
-  
+  const query =
+    "SELECT date, DAYNAME(timeBegin) AS day, " +
+    "LPAD(HOUR(timeBegin), 2, 0) AS satPocetak, LPAD(MINUTE(timeBegin), 2, 0) as minPocetak, " +
+    "LPAD(HOUR(timeEnd), 2, 0) AS satKraj, LPAD(MINUTE(timeEnd), 2, 0) as minKraj, " +
+    "name, description FROM TimeMaster.event " +
+    "INNER JOIN goal ON goal.idgoal = event.idgoal " +
+    "WHERE creator = ?;";
+
   //const idUser = localStorage.getItem("id");
-  const {idUser}  = req.body;
+  const { idUser } = req.body;
 
   db.query(query, [idUser], (err, result) => {
     if (err) {
       addResponse(response_body, "401", err.message, null);
-    }
-    else {
+    } else {
       addResponse(response_body, "200", "DBM", result);
       console.log(response_body);
     }
     res.json(response_body);
   });
+};
 
+exports.changeReminderActivity = function (req, res) {
+  const response_body = {};
+  const { idrepeating, active } = req.body;
 
-}
+  let query = "UPDATE repeating SET active = ? WHERE idrepeating = ?";
+
+  db.query(query, [active, idrepeating], function (err, result) {
+    if (err) {
+      addResponse(response_body, "400", err.message, undefined);
+    } else {
+      addResponse(response_body, "200", "successful", undefined);
+    }
+    res.json(response_body);
+  });
+};

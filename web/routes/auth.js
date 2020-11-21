@@ -13,6 +13,7 @@ router.route('/getOnetimeReminders').get(controller.getOnetimeReminders);
 router.route('/getRepeatingReminders').get(controller.getRepeatingReminders);
 router.route('/addReminder').post(controller.addReminder);
 router.route("/calendar").post(controller.calendar);
+router.route('/changeReminderActivity').put(controller.changeReminderActivity);
 
 
 module.exports = router;

@@ -11,7 +11,7 @@ var remIntervalTime = document.getElementById("remIntervalTime");
 var buttonRepeating = document.getElementById("show-password");
 
 //function for creating list item in reminder list
-function createReminder(id, idreminder, type, name, description, date) {
+function createReminder(id, idreminder, type, name, description, date, active) {
   //type = 1 => onetime reminder
   //type = 0 => repeating reminder
 
@@ -23,6 +23,10 @@ function createReminder(id, idreminder, type, name, description, date) {
     "class",
     "fa fa-edit w3-bar-item w3-button w3-white w3-xlarge w3-right"
   );
+  editIcon.addEventListener("click", function () {
+    let dateToEdit = type ? date : "";
+    openReminderModal(idreminder, name, description, dateToEdit);
+  });
   reminder.appendChild(editIcon);
 
   const img = document.createElement("img");
@@ -65,6 +69,52 @@ function createReminder(id, idreminder, type, name, description, date) {
     dateSpan.dataset.timestamps = date;
   }
   reminder.appendChild(dateSpan);
+
+  if (!type) {
+    const slider = document.createElement("label");
+    slider.setAttribute("class", "switch");
+
+    const sliderInput = document.createElement("input");
+    sliderInput.setAttribute("type", "checkbox");
+    if (active) {
+      sliderInput.setAttribute("checked", "checked");
+    } else {
+      dateSpan.classList.remove("repeating");
+      dateSpan.textContent = "";
+    }
+    slider.appendChild(sliderInput);
+
+    const sliderSpan = document.createElement("span");
+    sliderSpan.setAttribute("class", "slider round");
+    slider.appendChild(sliderSpan);
+
+    reminder.appendChild(slider);
+
+    sliderInput.addEventListener("click", function () {
+      let data = {
+        idrepeating: id,
+      };
+      if (sliderInput.checked) {
+        //enable repeating
+        if (!dateSpan.classList.contains("repeating")) {
+          dateSpan.classList.add("repeating");
+          data.active = 1;
+        }
+      } else {
+        //disable repeating
+        if (dateSpan.classList.contains("repeating")) {
+          dateSpan.classList.remove("repeating");
+          dateSpan.textContent = "";
+          data.active = 0;
+        }
+      }
+      sendHttpRequest(
+        "PUT",
+        "http://localhost:3000/auth/changeReminderActivity",
+        data
+      );
+    });
+  }
 
   return reminder;
 }
@@ -140,12 +190,55 @@ function setAllTimers() {
   }
 }
 
-function openReminderModal() {
+function openReminderModal(idreminder, name, description, dateToEdit) {
   addReminderModal.style.display = "block";
-  document.getElementById("remIntervalTime").disabled = true;
+  if (idreminder) {
+    //edit
+    remName.value = name;
+    remDescription.value = description;
+    if (dateToEdit != "") remTime.value = dateToEdit;
+  } else {
+    //add
+    document.getElementById("remIntervalTime").disabled = true;
+
+    submitButton.onclick = function () {
+      var txt_name = remName.value;
+      var txt_description = remDescription.value;
+      var txt_time = remTime.value;
+      var txt_interval = remIntervalTime.value;
+
+      const remDate = new Date(new Date(txt_time).getTime() + 3600 * 1000)
+        .toISOString()
+        .slice(0, 19)
+        .replace("T", " ");
+      // puno if-ova nekih da vidim jel sve sto treba bit tu
+      // jos ifova
+      // else
+      // ......
+
+      let data = {
+        name: txt_name,
+        description: txt_description,
+        creator: id,
+        dateBegin: remDate,
+        type: !buttonRepeating.checked,
+        time: txt_interval,
+      };
+      console.log(data);
+      sendHttpRequest("POST", "http://localhost:3000/auth/addReminder", data)
+        .then((responseData) => {
+          location.reload();
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    };
+  }
 }
 
-addReminderBtn.onclick = openReminderModal;
+addReminderBtn.onclick = function () {
+  openReminderModal();
+};
 
 addRemSpan.onclick = function () {
   addReminderModal.style.display = "none";
@@ -160,39 +253,6 @@ window.onclick = function (event) {
 buttonRepeating.onclick = function () {
   document.getElementById("remIntervalTime").disabled = false;
   document.getElementById("remIn");
-};
-
-submitButton.onclick = function () {
-  var txt_name = remName.value;
-  var txt_description = remDescription.value;
-  var txt_time = remTime.value;
-  var txt_interval = remIntervalTime.value;
-
-  const remDate = new Date(new Date(txt_time).getTime() + 3600 * 1000)
-    .toISOString()
-    .slice(0, 19)
-    .replace("T", " ");
-  // puno if-ova nekih da vidim jel sve sto treba bit tu
-  // jos ifova
-  // else
-  // ......
-
-  let data = {
-    name: txt_name,
-    description: txt_description,
-    creator: id,
-    dateBegin: remDate,
-    type: !buttonRepeating.checked,
-    time: txt_interval,
-  };
-  console.log(data);
-  sendHttpRequest("POST", "http://localhost:3000/auth/addReminder", data)
-    .then((responseData) => {
-      location.reload();
-    })
-    .catch((error) => {
-      alert(error);
-    });
 };
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -215,13 +275,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         timestamps.reverse();
 
+        let active =
+          new Date(element.dateBegin) < new Date() ? element.active : 0;
+
         const reminder = createReminder(
           element.idrepeating,
           element.idreminder,
           0,
           element.name,
           element.description,
-          timestamps
+          timestamps,
+          active
         );
         reminderList.appendChild(reminder);
       });
