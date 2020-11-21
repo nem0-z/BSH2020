@@ -29,13 +29,17 @@ router.get("/showsolution", function (req, res) {
 router.get("/makenewtask", function (req, res) {
   res.render("makenewtask");
 });
-  
+
 router.get("/calendar", function (req, res) {
   res.render("calendar");
 });
 
 router.get("/home", function (req, res) {
   res.render("homepage");
+});
+
+router.get("/map", function (req, res) {
+  res.render("map");
 });
 
 module.exports = router;
