@@ -11,7 +11,7 @@ var remIntervalTime = document.getElementById("remIntervalTime");
 var buttonRepeating = document.getElementById("show-password");
 
 //function for creating list item in reminder list
-function createReminder(id, idreminder, type, name, description, date) {
+function createReminder(id, idreminder, type, name, description, date, active) {
   //type = 1 => onetime reminder
   //type = 0 => repeating reminder
 
@@ -65,6 +65,52 @@ function createReminder(id, idreminder, type, name, description, date) {
     dateSpan.dataset.timestamps = date;
   }
   reminder.appendChild(dateSpan);
+
+  if (!type) {
+    const slider = document.createElement("label");
+    slider.setAttribute("class", "switch");
+
+    const sliderInput = document.createElement("input");
+    sliderInput.setAttribute("type", "checkbox");
+    if (active) {
+      sliderInput.setAttribute("checked", "checked");
+    } else {
+      dateSpan.classList.remove("repeating");
+      dateSpan.textContent = "";
+    }
+    slider.appendChild(sliderInput);
+
+    const sliderSpan = document.createElement("span");
+    sliderSpan.setAttribute("class", "slider round");
+    slider.appendChild(sliderSpan);
+
+    reminder.appendChild(slider);
+
+    sliderInput.addEventListener("click", function () {
+      let data = {
+        idrepeating: id,
+      };
+      if (sliderInput.checked) {
+        //enable repeating
+        if (!dateSpan.classList.contains("repeating")) {
+          dateSpan.classList.add("repeating");
+          data.active = 1;
+        }
+      } else {
+        //disable repeating
+        if (dateSpan.classList.contains("repeating")) {
+          dateSpan.classList.remove("repeating");
+          dateSpan.textContent = "";
+          data.active = 0;
+        }
+      }
+      sendHttpRequest(
+        "PUT",
+        "http://localhost:3000/auth/changeReminderActivity",
+        data
+      );
+    });
+  }
 
   return reminder;
 }
@@ -215,13 +261,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         timestamps.reverse();
 
+        let active =
+          new Date(element.dateBegin) < new Date() ? element.active : 0;
+
         const reminder = createReminder(
           element.idrepeating,
           element.idreminder,
           0,
           element.name,
           element.description,
-          timestamps
+          timestamps,
+          active
         );
         reminderList.appendChild(reminder);
       });
