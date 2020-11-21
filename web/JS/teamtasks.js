@@ -1,4 +1,6 @@
 var modal = document.getElementById("myModal");
+const submitBtn = document.getElementById("submitBtn");
+const returnBtn = document.getElementById("returnBtn");
 
 window.onload = () => {
   const userRole = localStorage.getItem("role");
@@ -82,3 +84,7 @@ function makeNewTask(event) {
 function showModal(event) {
   modal.style.display = "block";
 }
+
+returnBtn.addEventListener("click", () => {
+  modal.style.display = "none";
+});

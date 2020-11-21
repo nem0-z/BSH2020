@@ -16,8 +16,9 @@
   background-color: black;
   color: white;
 }
-.modal p {
+.modal p input {
   margin-top: 50px;
+  font-size: 18px;
 }
 #checkbox {
   top: 0;
@@ -39,7 +40,7 @@
   margin: 40px;
   width: 25%;
 }
-#submitBtn:hover #leaderAddBtn {
+#submitBtn:hover {
   background-color: black;
   color: #04aaaa;
   transition: background-color 0.7s ease;
@@ -47,6 +48,13 @@
 #returnBtn:hover {
   background-color: red;
   transition: background-color 0.7s ease;
+}
+
+#leaderAddBtn:hover {
+  background-color: black;
+  color: #04aaaa;
+  transition: background-color 0.7s ease;
+  border: solid 1px#04aaaa;
 }
 .subheader {
   text-align: center;
