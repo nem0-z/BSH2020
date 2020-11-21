@@ -27,7 +27,8 @@ submitButton.addEventListener("click", (e) => {
 
   sendHttpRequest("POST", "http://localhost:3000/auth/makenewtask", data)
     .then((responseData) => {
-      window.location.assign(document.referrer);
+      // window.location.assign(document.referrer);
+      window.history.back(); //fix this later, haj pricacemo ima na miri
     })
     .catch((error) => alert(error));
 });

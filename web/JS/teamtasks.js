@@ -45,7 +45,8 @@ function showSolution(event) {
 }
 
 function appendToMyTasks(event) {
-  showModal(event);
+  modal.style.display = "block";
+  idtask = event.target.id.substring(7);
 
   const btnDone = event.target;
   const taskItem = btnDone.parentElement.parentElement;
@@ -56,21 +57,17 @@ function appendToMyTasks(event) {
     iduser: iduser,
   };
 
-  sendHttpRequest("POST", "http://localhost:3000/auth/appendmytask", data)
-    .then((responseData) => {})
-    .catch((error) => {
-      alert(error);
-    });
+  sendHttpRequest(
+    "POST",
+    "http://localhost:3000/auth/appendmytask",
+    data
+  ).catch((error) => {
+    alert(error);
+  });
 }
 
 function makeNewTask(event) {
   window.location.assign("/makenewtask");
-}
-
-// user should enter timebegin and timeend for this event
-function showModal(event) {
-  modal.style.display = "block";
-  idtask = event.target.id.substring(7);
 }
 
 returnBtn.addEventListener("click", () => {
@@ -92,7 +89,7 @@ submitBtn.addEventListener("click", (e) => {
       eventdate: eventdate,
       eventbegin: eventbegin,
       eventend: eventend,
-      idgoal: idtask,
+      idtask: idtask,
     };
     console.log(data);
     sendHttpRequest(

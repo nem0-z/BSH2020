@@ -268,7 +268,6 @@ exports.addReminder = function (req, res) {
 };
 exports.calendar = function (req, res) {
   const response_body = {};
-  console.log("test");
 
   const query =
     "SELECT date, DAYNAME(timeBegin) AS day, " +
@@ -278,7 +277,8 @@ exports.calendar = function (req, res) {
     "INNER JOIN goal ON goal.idgoal = event.idgoal " +
     "INNER JOIN task ON task.idgoal = goal.idgoal " +
     "WHERE assignee = ? AND " +
-    "YEARWEEK(timeBegin)=YEARWEEK(NOW());";
+    "YEARWEEK(timeBegin)=YEARWEEK(NOW()) " +
+    "AND WEEKDAY(timeBegin) IN (0,1,2,3,4);";
 
   //const idUser = localStorage.getItem("id");
   const { idUser } = req.body;
@@ -288,7 +288,6 @@ exports.calendar = function (req, res) {
       addResponse(response_body, "401", err.message, null);
     } else {
       addResponse(response_body, "200", "DBM", result);
-      console.log(response_body);
     }
     res.json(response_body);
   });
@@ -312,26 +311,35 @@ exports.changeReminderActivity = function (req, res) {
 
 exports.addtasktocalendar = function (req, res) {
   const response_body = {};
-  const { eventdate, eventbegin, eventend, idgoal } = req.body;
+  const { eventdate, eventbegin, eventend, idtask } = req.body;
 
   // converting to datetimes for mysql
   const eventbegin_ = eventdate + " " + eventbegin;
   const eventend_ = eventdate + " " + eventend;
 
-  let query = "INSERT INTO event VALUES(null,?,?,?,?);";
+  // console.log(idtask);
+  const query1 = "SELECT idgoal FROM task WHERE idtask=?;";
+  const query2 = "INSERT INTO event VALUES(null,?,?,?,?);";
 
-  db.query(
-    query,
-    [eventdate, eventbegin_, eventend_, idgoal],
-    function (err, result) {
-      if (err) {
-        addResponse(response_body, "400", err.message, undefined);
-      } else {
-        addResponse(response_body, "200", "successful", undefined);
-      }
-      res.json(response_body);
+  db.query(query1, [idtask], (err, result) => {
+    if (err) {
+      addResponse(response_body, "400", err.message, undefined);
+    } else {
+      const idgoal = result[0].idgoal;
+      db.query(
+        query2,
+        [eventdate, eventbegin_, eventend_, idgoal],
+        (err, results) => {
+          if (err) {
+            addResponse(response_body, "401", err.message, undefined);
+          } else {
+            addResponse(response_body, "200", "successful", undefined);
+          }
+          res.json(response_body);
+        }
+      );
     }
-  );
+  });
 };
 
 exports.editReminder = function (req, res) {
