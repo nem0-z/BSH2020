@@ -175,7 +175,7 @@ function setAllTimers() {
         "description"
       )[0].textContent;
       openNotificationModal(name, description);
-      reminderList.removeChild(element.parentNode);
+      onetimeReminderList.removeChild(element.parentNode);
     }
   }
   // for repeating reminders
