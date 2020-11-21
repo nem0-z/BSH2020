@@ -1,3 +1,5 @@
+var modal = document.getElementById("myModal");
+
 window.onload = () => {
   const userRole = localStorage.getItem("role");
   sendHttpRequest("POST", "http://localhost:3000/auth/teamtasks")
@@ -36,6 +38,8 @@ function showSolution(event) {
 }
 
 function appendToMyTasks(event) {
+  showModal(event);
+
   const btnDone = event.target;
   const taskItem = btnDone.parentElement.parentElement;
   const taskID = taskItem.id;
@@ -73,4 +77,8 @@ function appendToMyTasks(event) {
 
 function makeNewTask(event) {
   window.location.assign("/makenewtask");
+}
+
+function showModal(event) {
+  modal.style.display = "block";
 }
