@@ -1,6 +1,7 @@
+function fetchReminders(){
 const idUser = localStorage.getItem("id");
 const data = { idUser: idUser };
-sendHttpRequest("POST","http://localhost:3000/auth/calendar",data)
+sendHttpRequest("POST","http://localhost:3000/auth/calendarReminder",data)
 .then(responseData=>{
     responseData.forEach((element)=>{
         addCalendarEvent(
@@ -13,10 +14,11 @@ sendHttpRequest("POST","http://localhost:3000/auth/calendar",data)
           element.day,
           element.urgency
         );
-        
       })
-      fetchReminders();
+      calendarMain(); 
+      limitCalendarToWeek();
+      adjustReminderSize();
 }).catch(error => {
     alert(error);
 });
-
+}
