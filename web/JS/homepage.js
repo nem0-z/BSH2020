@@ -1,5 +1,14 @@
 var id = localStorage.getItem("id");
 var reminderList = document.getElementById("reminderList");
+var submitButton = document.getElementById("submitButton");
+var addReminderModal = document.getElementById("myModal");
+var addReminderBtn = document.getElementById("addReminder");
+var addRemSpan = document.getElementsByClassName("close")[0];
+var remName = document.getElementById("remName");
+var remDescription = document.getElementById("remDescription");
+var remTime = document.getElementById("remTime");
+var remIntervalTime = document.getElementById("remIntervalTime");
+var buttonRepeating = document.getElementById("show-password");
 
 //function for creating list item in reminder list
 function createReminder(id, idreminder, type, name, description, date) {
@@ -53,6 +62,7 @@ function createReminder(id, idreminder, type, name, description, date) {
     dateSpan.setAttribute("data-date", new Date(date));
   } else {
     dateSpan.classList.add("repeating");
+    dateSpan.dataset.timestamps = date;
   }
   reminder.appendChild(dateSpan);
 
@@ -98,12 +108,92 @@ function setAllTimers() {
       let description = element.parentNode.getElementsByClassName(
         "description"
       )[0].textContent;
-      openModalReminder(name, description);
-
+      alert(name);
       reminderList.removeChild(element.parentNode);
     }
   }
+  let repeatings = document.getElementsByClassName("repeating");
+  for (const element of repeatings) {
+    let timestamps = Array.from(element.dataset.timestamps.split(","), (x) =>
+      parseInt(x)
+    );
+    let now = new Date().getTime();
+    let last = timestamps.length - 1;
+    while (timestamps[last] < now) {
+      timestamps.pop();
+      last--;
+      element.dataset.timestamps = timestamps;
+    }
+    let text = updateTime(timestamps[last]);
+    if (text != "0s") {
+      element.textContent = text;
+    } else {
+      let name = element.parentNode.getElementsByClassName("name")[0]
+        .textContent;
+      let description = element.parentNode.getElementsByClassName(
+        "description"
+      )[0].textContent;
+      alert(name);
+
+      if (timestamps.lenght == 1) reminderList.removeChild(element.parentNode);
+    }
+  }
 }
+
+function openReminderModal() {
+  addReminderModal.style.display = "block";
+  document.getElementById("remIntervalTime").disabled = true;
+}
+
+addReminderBtn.onclick = openReminderModal;
+
+addRemSpan.onclick = function () {
+  addReminderModal.style.display = "none";
+};
+
+window.onclick = function (event) {
+  if (event.target == addReminderModal) {
+    addReminderModal.style.display = "none";
+  }
+};
+
+buttonRepeating.onclick = function () {
+  document.getElementById("remIntervalTime").disabled = false;
+  document.getElementById("remIn");
+};
+
+submitButton.onclick = function () {
+  var txt_name = remName.value;
+  var txt_description = remDescription.value;
+  var txt_time = remTime.value;
+  var txt_interval = remIntervalTime.value;
+
+  const remDate = new Date(new Date(txt_time).getTime() + 3600 * 1000)
+    .toISOString()
+    .slice(0, 19)
+    .replace("T", " ");
+  // puno if-ova nekih da vidim jel sve sto treba bit tu
+  // jos ifova
+  // else
+  // ......
+
+  let data = {
+    name: txt_name,
+    description: txt_description,
+    creator: id,
+    dateBegin: remDate,
+    type: !buttonRepeating.checked,
+    time: txt_interval,
+  };
+  console.log(data);
+  sendHttpRequest("POST", "http://localhost:3000/auth/addReminder", data)
+    .then((responseData) => {
+      location.reload();
+    })
+    .catch((error) => {
+      alert(error);
+    });
+};
 
 document.addEventListener("DOMContentLoaded", function () {
   sendHttpRequest(
@@ -112,13 +202,26 @@ document.addEventListener("DOMContentLoaded", function () {
   )
     .then((responseData) => {
       responseData.forEach((element) => {
+        let timeBegin = new Date(element.dateBegin).getTime();
+        let now = new Date().getTime();
+        while (timeBegin < now) {
+          timeBegin += element.time * 60000;
+        }
+        let timestamps = new Array();
+        let endTime = timeBegin + 43200000;
+        while (timeBegin < endTime) {
+          timestamps.push(timeBegin);
+          timeBegin += element.time * 60000;
+        }
+        timestamps.reverse();
+
         const reminder = createReminder(
           element.idrepeating,
           element.idreminder,
           0,
           element.name,
           element.description,
-          element.dateBegin
+          timestamps
         );
         reminderList.appendChild(reminder);
       });

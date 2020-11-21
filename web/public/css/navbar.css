@@ -2,6 +2,7 @@
   list-style-type: none;
   vertical-align: middle;
   height: inherit;
+  margin: 28px;
 }
 .navbar li a {
   font-size: 32px;
