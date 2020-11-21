@@ -362,16 +362,16 @@ exports.editReminder = function (req, res) {
 exports.calendarReminder = function (req, res) {
   const response_body = {};
 
-  const query = "SELECT DAYNAME(dateBegin) AS day, LPAD(HOUR(dateBegin),2,0) as satPocetak, "+
-  "LPAD(MINUTE(dateBegin),2,0) as minPocetak, "+
-  "LPAD(HOUR(DATE_ADD(dateBegin, INTERVAL 5 MINUTE)),2,0) as satKraj, "+
-  "LPAD(MINUTE(DATE_ADD(dateBegin, INTERVAL 5 MINUTE)),2,0) as minKraj, "+
-  "name, description, 3 as urgency FROM onetime INNER JOIN reminder ON reminder.idreminder = onetime.idreminder "+
-  "WHERE creator = 2 AND "+
-  "YEARWEEK(dateBegin)=YEARWEEK(NOW()) " +
+  const query =
+    "SELECT DAYNAME(dateBegin) AS day, LPAD(HOUR(dateBegin),2,0) as satPocetak, " +
+    "LPAD(MINUTE(dateBegin),2,0) as minPocetak, " +
+    "LPAD(HOUR(DATE_ADD(dateBegin, INTERVAL 5 MINUTE)),2,0) as satKraj, " +
+    "LPAD(MINUTE(DATE_ADD(dateBegin, INTERVAL 5 MINUTE)),2,0) as minKraj, " +
+    "name, description, 3 as urgency FROM onetime INNER JOIN reminder ON reminder.idreminder = onetime.idreminder " +
+    "WHERE creator = ? AND " +
+    "YEARWEEK(dateBegin)=YEARWEEK(NOW()) " +
     "AND WEEKDAY(dateBegin) IN (0,1,2,3,4);";
 
-  //const idUser = localStorage.getItem("id");
   const { idUser } = req.body;
 
   db.query(query, [idUser], (err, result) => {
@@ -379,7 +379,6 @@ exports.calendarReminder = function (req, res) {
       addResponse(response_body, "401", err.message, null);
     } else {
       addResponse(response_body, "200", "DBM", result);
-      console.log(response_body);
     }
     res.json(response_body);
   });
