@@ -43,7 +43,7 @@ submitButton.addEventListener("click", (e) => {
     //Send http request and if all good, go back to where user came from
     sendHttpRequest("POST", "http://localhost:3000/auth/solution", data)
       .then((responseData) => {
-        window.location.assign(document.referrer);
+        window.location.replace("/mytasks");
       })
       .catch((error) => alert(error));
   }
