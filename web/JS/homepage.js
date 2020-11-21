@@ -240,12 +240,23 @@ function openReminderModal(idreminder, name, description, dateToEdit) {
 function fetchData(idreminder) {
   let txt_name = remName.value;
   let txt_description = remDescription.value;
+  var txt_time = document.getElementById("remTime").value;
 
   // puno if-ova nekih da vidim jel sve sto treba bit tu
-  // jos ifova
-  // else
-  // ......
-
+  if (!idreminder) {
+    if (!txt_time) {
+      alert("Wrong input!\nTime is required!");
+      return "";
+    }
+    else if (buttonRepeating.checked == true && !remIntervalTime.value) {
+      alert("Time interval is required for repeating reminders!");
+      return ""
+    }
+  }
+  if (!txt_name || !txt_description) {
+    alert("Wrong input!\nName and description are required!");
+    return "";
+  }
   let data = {
     name: txt_name,
     description: txt_description
