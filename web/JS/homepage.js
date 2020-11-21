@@ -8,7 +8,16 @@ var remName = document.getElementById("remName");
 var remDescription = document.getElementById("remDescription");
 var remTime = document.getElementById("remTime");
 var remIntervalTime = document.getElementById("remIntervalTime");
-var buttonRepeating = document.getElementById("show-password");
+var buttonRepeating = document.getElementById("buttonRepeating");
+var unusedElements = document.getElementById("unusedForEditingReminder");
+var notificationModal = document.getElementById("reminderNotificationModal");
+var notificationName = document.getElementById("notificationName");
+var notificationDescription = document.getElementById(
+  "notificationDescription"
+);
+var btnCloseNotificationModal = document.getElementById(
+  "closeNotificationModal"
+);
 
 //function for creating list item in reminder list
 function createReminder(id, idreminder, type, name, description, date, active) {
@@ -158,7 +167,7 @@ function setAllTimers() {
       let description = element.parentNode.getElementsByClassName(
         "description"
       )[0].textContent;
-      alert(name);
+      openNotificationModal(name, description);
       reminderList.removeChild(element.parentNode);
     }
   }
@@ -183,7 +192,7 @@ function setAllTimers() {
       let description = element.parentNode.getElementsByClassName(
         "description"
       )[0].textContent;
-      alert(name);
+      openNotificationModal(name, description);
 
       if (timestamps.lenght == 1) reminderList.removeChild(element.parentNode);
     }
@@ -191,49 +200,103 @@ function setAllTimers() {
 }
 
 function openReminderModal(idreminder, name, description, dateToEdit) {
+  //show modal
   addReminderModal.style.display = "block";
+
   if (idreminder) {
     //edit
+
+    //hide unused elements
+    unusedElements.style.display = "none";
+    submitButton.textContent = "SAVE";
+
+    //fill inputs with existing data
     remName.value = name;
     remDescription.value = description;
-    if (dateToEdit != "") remTime.value = dateToEdit;
-  } else {
-    //add
-    document.getElementById("remIntervalTime").disabled = true;
 
     submitButton.onclick = function () {
-      var txt_name = remName.value;
-      var txt_description = remDescription.value;
-      var txt_time = remTime.value;
-      var txt_interval = remIntervalTime.value;
+      let data = fetchData(idreminder);
+      if (data) {
+        sendHttpRequest("PUT", "http://localhost:3000/auth/editReminder", data)
+          .then((responseData) => {
+            location.reload();
+          })
+          .catch((error) => {
+            alert(error);
+          });
+      }
+    };
+  } else {
+    //add
+    submitButton.textContent = "ADD";
+    unusedElements.style.display = "block";
+    remIntervalTime.disabled = true;
+    buttonRepeating.checked = false;
 
-      const remDate = new Date(new Date(txt_time).getTime() + 3600 * 1000)
-        .toISOString()
-        .slice(0, 19)
-        .replace("T", " ");
-      // puno if-ova nekih da vidim jel sve sto treba bit tu
-      // jos ifova
-      // else
-      // ......
-
-      let data = {
-        name: txt_name,
-        description: txt_description,
-        creator: id,
-        dateBegin: remDate,
-        type: !buttonRepeating.checked,
-        time: txt_interval,
-      };
-      console.log(data);
-      sendHttpRequest("POST", "http://localhost:3000/auth/addReminder", data)
-        .then((responseData) => {
-          location.reload();
-        })
-        .catch((error) => {
-          alert(error);
-        });
+    submitButton.onclick = function () {
+      let data = fetchData();
+      if (data) {
+        sendHttpRequest("POST", "http://localhost:3000/auth/addReminder", data)
+          .then((responseData) => {
+            location.reload();
+          })
+          .catch((error) => {
+            alert(error);
+          });
+      }
     };
   }
+}
+
+function fetchData(idreminder) {
+  let txt_name = remName.value;
+  let txt_description = remDescription.value;
+  var txt_time = document.getElementById("remTime").value;
+
+  // check if input is valid
+  if (!idreminder) {
+    if (!txt_time) {
+      alert("Wrong input!\nTime is required!");
+      return null;
+    } else if (buttonRepeating.checked == true && !remIntervalTime.value) {
+      alert("Time interval is required for repeating reminders!");
+      return null;
+    }
+  }
+  if (!txt_name || !txt_description) {
+    alert("Wrong input!\nName and description are required!");
+    return null;
+  }
+  let data = {
+    name: txt_name,
+    description: txt_description,
+  };
+
+  if (idreminder) {
+    data.idreminder = idreminder;
+  } else {
+    let txt_time = remTime.value;
+    const remDate = new Date(new Date(txt_time).getTime() + 3600 * 1000)
+      .toISOString()
+      .slice(0, 19)
+      .replace("T", " ");
+    data.dateBegin = remDate;
+    let txt_interval = remIntervalTime.value;
+    data.time = txt_interval;
+    data.creator = id;
+    data.type = !buttonRepeating.checked;
+  }
+
+  return data;
+}
+
+function openNotificationModal(name, description) {
+  notificationModal.style.display = "block";
+  notificationName.textContent = name;
+  notificationDescription.textContent = description;
+
+  const audio = new Audio("../audio.m4a");
+  audio.play();
 }
 
 addReminderBtn.onclick = function () {
@@ -250,10 +313,18 @@ window.onclick = function (event) {
   }
 };
 
-buttonRepeating.onclick = function () {
-  document.getElementById("remIntervalTime").disabled = false;
-  document.getElementById("remIn");
-};
+btnCloseNotificationModal.addEventListener("click", function () {
+  notificationModal.style.display = "none";
+});
+
+buttonRepeating.addEventListener("click", function () {
+  console.log(buttonRepeating.checked);
+  if (buttonRepeating.checked) {
+    remIntervalTime.disabled = false;
+  } else {
+    remIntervalTime.disabled = true;
+  }
+});
 
 document.addEventListener("DOMContentLoaded", function () {
   sendHttpRequest(

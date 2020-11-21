@@ -297,7 +297,7 @@ exports.changeReminderActivity = function (req, res) {
   const response_body = {};
   const { idrepeating, active } = req.body;
 
-  let query = "UPDATE repeating SET active = ? WHERE idrepeating = ?";
+  let query = "UPDATE repeating SET active = ? WHERE idrepeating = ?;";
 
   db.query(query, [active, idrepeating], function (err, result) {
     if (err) {
@@ -307,4 +307,25 @@ exports.changeReminderActivity = function (req, res) {
     }
     res.json(response_body);
   });
+};
+
+exports.editReminder = function (req, res) {
+  const response_body = {};
+  const { idreminder, name, description } = req.body;
+
+  let query =
+    "UPDATE reminder SET name = ?, description = ? WHERE idreminder = ?;";
+
+  db.query(
+    query,
+    [name, description, idreminder],
+    function (err, result) {
+      if (err) {
+        addResponse(response_body, "400", err.message, undefined);
+      } else {
+        addResponse(response_body, "200", "successful", undefined);
+      }
+      res.json(response_body);
+    }
+  );
 };
