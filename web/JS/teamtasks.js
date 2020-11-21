@@ -1,6 +1,8 @@
 var modal = document.getElementById("myModal");
 const submitBtn = document.getElementById("submitBtn");
 const returnBtn = document.getElementById("returnBtn");
+const timebegin = document.getElementById("timebegin");
+const timeend = document.getElementById("timeend");
 
 window.onload = () => {
   const userRole = localStorage.getItem("role");
@@ -66,7 +68,6 @@ function appendToMyTasks(event) {
   //   if (xhr.status == 200 && xhr.readyState == 4) {
   //     const data = JSON.parse(this.response);
   //     if (data.status == 200) {
-  //       location.reload();
   //     } else {
   //       alert(data.message);
   //     }
@@ -81,10 +82,34 @@ function makeNewTask(event) {
   window.location.assign("/makenewtask");
 }
 
+// user should enter timeend for this event
 function showModal(event) {
   modal.style.display = "block";
 }
 
 returnBtn.addEventListener("click", () => {
   modal.style.display = "none";
+});
+
+// create end date and send http request
+// from user input
+submitBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  const eventend = new Date(timeend.value.toString());
+
+  if (eventend === "") {
+    alert("Empty fields!");
+  } else {
+    const data = {
+      eventend: eventend,
+    };
+    console.log(data);
+    sendHttpRequest("POST", "http://localhost:3000/auth/teamtasks", data)
+      .then((responseData) => {
+        modal.style.display = "none";
+        location.reload();
+      })
+      .catch((error) => alert(error));
+  }
 });
