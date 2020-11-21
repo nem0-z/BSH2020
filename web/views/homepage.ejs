@@ -1,0 +1,52 @@
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!--CSS za reminder listu-->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+
+    <!-- Custom Theme files -->
+    <link href="/css/homepage.css" rel="stylesheet" type="text/css" />
+    <link href="/css/font-awesome.css" rel="stylesheet" />
+
+    <title>TaskMaster</title>
+
+</head>
+
+<body>
+    <!-- navigation bar -->
+    <%-include('partials/navbar');%>
+    <!-- //navigation bar -->
+
+    <!-- main -->
+    <div class="main-agileits">
+        <div class="container">
+
+            <!-- Reminder List -->
+            <ul id="reminderList" class="w3-ul w3-card-4"></ul>
+
+        </div>
+        <footer>
+            
+        </footer>
+    </div>
+    <!-- //main -->
+    <!-- js -->
+    <script src="../homepage.js"></script>
+    <script src="../sendHttpRequest.js"></script>
+</body>
+
+</html>

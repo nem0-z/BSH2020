@@ -9,6 +9,8 @@ router.route("/appendmytask").post(controller.appendmytask);
 router.route("/solution").post(controller.solution);
 router.route("/showsolution").post(controller.showsolution);
 router.route("/makenewtask").post(controller.makenewtask);
+router.route('/getOnetimeReminders').get(controller.getOnetimeReminders);
+router.route('/getRepeatingReminders').get(controller.getRepeatingReminders);
 router.route("/calendar").post(controller.calendar);
 
 
