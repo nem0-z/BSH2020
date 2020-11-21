@@ -142,7 +142,9 @@ exports.calendar = function (req, res) {
   "LPAD(HOUR(timeEnd), 2, 0) AS satKraj, LPAD(MINUTE(timeEnd), 2, 0) as minKraj, "+
   "name, description FROM TimeMaster.event "+
   "INNER JOIN goal ON goal.idgoal = event.idgoal "+
-  "WHERE creator = ?;";
+  "INNER JOIN task ON task.idgoal = goal.idgoal "+
+  "WHERE assignee = ? AND " +
+  "YEARWEEK(timeBegin)=YEARWEEK(NOW());";
   
   //const idUser = localStorage.getItem("id");
   const {idUser}  = req.body;
