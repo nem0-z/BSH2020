@@ -99,7 +99,7 @@ function setAllTimers() {
       let description = element.parentNode.getElementsByClassName(
         "description"
       )[0].textContent;
-
+        alert(name);
       reminderList.removeChild(element.parentNode);
     }
   }

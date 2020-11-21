@@ -134,6 +134,7 @@ exports.showsolution = function (req, res) {
   });
 };
 
+
 exports.makenewtask = function (req, res) {
   const response_body = {};
   const { title, urgent, assignee, description, iduser, type } = req.body;
@@ -266,3 +267,29 @@ exports.addReminder = function (req, res) {
     }
   );
 };
+exports.calendar = function (req, res) {
+  const response_body = {};
+  console.log("test");
+  const query = "SELECT date, DAYNAME(timeBegin) AS day, "+
+  "LPAD(HOUR(timeBegin), 2, 0) AS satPocetak, LPAD(MINUTE(timeBegin), 2, 0) as minPocetak, "+
+  "LPAD(HOUR(timeEnd), 2, 0) AS satKraj, LPAD(MINUTE(timeEnd), 2, 0) as minKraj, "+
+  "name, description FROM TimeMaster.event "+
+  "INNER JOIN goal ON goal.idgoal = event.idgoal "+
+  "WHERE creator = ?;";
+  
+  //const idUser = localStorage.getItem("id");
+  const {idUser}  = req.body;
+
+  db.query(query, [idUser], (err, result) => {
+    if (err) {
+      addResponse(response_body, "401", err.message, null);
+    }
+    else {
+      addResponse(response_body, "200", "DBM", result);
+      console.log(response_body);
+    }
+    res.json(response_body);
+  });
+
+
+}
