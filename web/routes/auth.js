@@ -9,11 +9,11 @@ router.route("/appendmytask").post(controller.appendmytask);
 router.route("/solution").post(controller.solution);
 router.route("/showsolution").post(controller.showsolution);
 router.route("/makenewtask").post(controller.makenewtask);
-router.route('/getOnetimeReminders').get(controller.getOnetimeReminders);
-router.route('/getRepeatingReminders').get(controller.getRepeatingReminders);
-router.route('/addReminder').post(controller.addReminder);
+router.route("/getOnetimeReminders").get(controller.getOnetimeReminders);
+router.route("/getRepeatingReminders").get(controller.getRepeatingReminders);
+router.route("/addReminder").post(controller.addReminder);
 router.route("/calendar").post(controller.calendar);
-router.route('/changeReminderActivity').put(controller.changeReminderActivity);
-
+router.route("/changeReminderActivity").put(controller.changeReminderActivity);
+router.route("/addtasktocalendar").post(controller.addtasktocalendar);
 
 module.exports = router;

@@ -1,5 +1,5 @@
 var modal = document.getElementById("myModal");
-var taskID = undefined;
+var idtask;
 const submitBtn = document.getElementById("submitBtn");
 const returnBtn = document.getElementById("returnBtn");
 const date = document.getElementById("date");
@@ -46,55 +46,54 @@ function showSolution(event) {
 function appendToMyTasks(event) {
   showModal(event);
 
-  // const btnDone = event.target;
-  // const taskItem = btnDone.parentElement.parentElement;
-  // taskID = taskItem.id;
-  // const iduser = localStorage.getItem("id");
+  const btnDone = event.target;
+  const taskItem = btnDone.parentElement.parentElement;
+  const iduser = localStorage.getItem("id");
 
-  // const data = {
-  //   taskID: taskID,
-  //   iduser: iduser,
-  // };
+  const data = {
+    taskID: idtask,
+    iduser: iduser,
+  };
 
-  // const link = "http://localhost:3000/auth/appendmytask";
-  // const xhr = new XMLHttpRequest();
+  const link = "http://localhost:3000/auth/appendmytask";
+  const xhr = new XMLHttpRequest();
 
-  // xhr.open("POST", link, true);
-  // xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.open("POST", link, true);
+  xhr.setRequestHeader("Content-Type", "application/json");
 
-  // xhr.onerror = function () {
-  //   alert("Network error");
-  // };
+  xhr.onerror = function () {
+    alert("Network error");
+  };
 
-  // xhr.onload = function () {
-  //   if (xhr.status == 200 && xhr.readyState == 4) {
-  //     const data = JSON.parse(this.response);
-  //     if (data.status == 200) {
-  //     } else {
-  //       alert(data.message);
-  //     }
-  //   } else {
-  //     alert("Server error");
-  //   }
-  // };
-  // xhr.send(JSON.stringify(data));
+  xhr.onload = function () {
+    if (xhr.status == 200 && xhr.readyState == 4) {
+      const data = JSON.parse(this.response);
+      if (data.status == 200) {
+      } else {
+        alert(data.message);
+      }
+    } else {
+      alert("Server error");
+    }
+  };
+  xhr.send(JSON.stringify(data));
 }
 
 function makeNewTask(event) {
   window.location.assign("/makenewtask");
 }
 
-// user should enter timeend for this event
+// user should enter timebegin and timeend for this event
 function showModal(event) {
   modal.style.display = "block";
+  idtask = event.target.id.substring(7);
 }
 
 returnBtn.addEventListener("click", () => {
   modal.style.display = "none";
 });
 
-// create end date and send http request
-// from user input
+// create date, begin and end time then send http request
 submitBtn.addEventListener("click", (e) => {
   e.preventDefault();
 
@@ -109,15 +108,15 @@ submitBtn.addEventListener("click", (e) => {
       eventdate: eventdate,
       eventbegin: eventbegin,
       eventend: eventend,
-      idgoal: taskID,
+      idgoal: idtask,
     };
+    console.log(data);
     sendHttpRequest(
       "POST",
       "http://localhost:3000/auth/addtasktocalendar",
       data
     )
       .then((responseData) => {
-        console.log(1);
         modal.style.display = "none";
         location.reload();
       })
