@@ -1,3 +1,68 @@
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  max-width: 100%;
+  height: fit-content;
+  padding: 20px;
+  z-index: 1000;
+  border: solid 2px black;
+  border-radius: 10px;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 30px;
+  background-color: black;
+  color: white;
+}
+.modal p input {
+  margin-top: 50px;
+  font-size: 18px;
+}
+#checkbox {
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  color: #04aaaa;
+  display: inline-block;
+  background-color: #eee;
+}
+#submitBtn,
+#returnBtn,
+#leaderAddBtn {
+  height: 50px;
+  background-color: #04aaaa;
+  border-radius: 32px;
+  font-size: 18px;
+  color: white;
+  margin: 40px;
+  width: 25%;
+}
+#submitBtn:hover {
+  background-color: black;
+  color: #04aaaa;
+  transition: background-color 0.7s ease;
+}
+#returnBtn:hover {
+  background-color: red;
+  transition: background-color 0.7s ease;
+}
+
+#leaderAddBtn:hover {
+  background-color: black;
+  color: #04aaaa;
+  transition: background-color 0.7s ease;
+  border: solid 1px#04aaaa;
+}
+.subheader {
+  text-align: center;
+  padding: 20px;
+  border-bottom: #000000 solid 2px;
+  background-color: black;
+}
+
 body {
   font-family: Verdana, sans-serif;
 }

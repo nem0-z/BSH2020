@@ -1,7 +1,16 @@
+var modal = document.getElementById("myModal");
+var idtask;
+const submitBtn = document.getElementById("submitBtn");
+const returnBtn = document.getElementById("returnBtn");
+const date = document.getElementById("date");
+const timebegin = document.getElementById("timebegin");
+const timeend = document.getElementById("timeend");
+
 window.onload = () => {
   const userRole = localStorage.getItem("role");
   sendHttpRequest("POST", "http://localhost:3000/auth/teamtasks")
     .then((taskList) => {
+      //Show each task on html if query went through
       taskList.forEach((task) => {
         addNewTask(
           task.idtask,
@@ -20,7 +29,7 @@ window.onload = () => {
         const leaderBtn = document.getElementById("leaderAddBtn");
         leaderBtn.style.display = "block";
         leaderBtn.addEventListener("click", makeNewTask);
-      }
+      } //This not good, deal with this later
     })
     .catch((error) => alert(error));
 };
@@ -36,41 +45,65 @@ function showSolution(event) {
 }
 
 function appendToMyTasks(event) {
+  showModal(event);
+
   const btnDone = event.target;
   const taskItem = btnDone.parentElement.parentElement;
-  const taskID = taskItem.id;
   const iduser = localStorage.getItem("id");
 
   const data = {
-    taskID: taskID,
+    taskID: idtask,
     iduser: iduser,
   };
 
-  const link = "http://localhost:3000/auth/appendmytask";
-  const xhr = new XMLHttpRequest();
-
-  xhr.open("POST", link, true);
-  xhr.setRequestHeader("Content-Type", "application/json");
-
-  xhr.onerror = function () {
-    alert("Network error");
-  };
-
-  xhr.onload = function () {
-    if (xhr.status == 200 && xhr.readyState == 4) {
-      const data = JSON.parse(this.response);
-      if (data.status == 200) {
-        location.reload();
-      } else {
-        alert(data.message);
-      }
-    } else {
-      alert("Server error");
-    }
-  };
-  xhr.send(JSON.stringify(data));
+  sendHttpRequest("POST", "http://localhost:3000/auth/appendmytask", data)
+    .then((responseData) => {})
+    .catch((error) => {
+      alert(error);
+    });
 }
 
 function makeNewTask(event) {
   window.location.assign("/makenewtask");
 }
+
+// user should enter timebegin and timeend for this event
+function showModal(event) {
+  modal.style.display = "block";
+  idtask = event.target.id.substring(7);
+}
+
+returnBtn.addEventListener("click", () => {
+  modal.style.display = "none";
+});
+
+// create date, begin and end time then send http request
+submitBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  const eventdate = date.value;
+  const eventbegin = timebegin.value;
+  const eventend = timeend.value;
+
+  if (eventdate === "" || eventbegin === "" || eventend === "") {
+    alert("Empty fields!");
+  } else {
+    const data = {
+      eventdate: eventdate,
+      eventbegin: eventbegin,
+      eventend: eventend,
+      idgoal: idtask,
+    };
+    console.log(data);
+    sendHttpRequest(
+      "POST",
+      "http://localhost:3000/auth/addtasktocalendar",
+      data
+    )
+      .then((responseData) => {
+        modal.style.display = "none";
+        location.reload();
+      })
+      .catch((error) => alert(error));
+  }
+});

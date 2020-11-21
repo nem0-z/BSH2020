@@ -20,18 +20,58 @@
 
     <!-- main -->
     <div class="main-agileits">
+      <div class="subheader">
+        <button
+          onclick="makeNewTask()"
+          id="leaderAddBtn"
+          class="w3-btn w3-round"
+        >
+          Create New Task
+        </button>
+      </div>
       <div class="container">
         <!-- Lista za taskove-->
         <ul id="myTasksList"></ul>
       </div>
     </div>
-    <button
-      class="w3-button w3-circle w3-black"
-      id="leaderAddBtn"
-      style="display: none"
-    >
-      +
-    </button>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+      <label"
+        >Add task to calendar
+      </label>
+      <p>
+        <input
+        class="w3-input w3-border w3-white"
+        id="date"
+        type="date"
+      />
+        <input
+        class="w3-input w3-border w3-white"
+        id="timebegin"
+        type="time"
+      />
+        <input
+          class="w3-input w3-border w3-white"
+          id="timeend"
+          type="time"
+        />
+      </p> 
+      <p style="text-align: center">
+        <button
+          class="w3-btn "
+          id="submitBtn">
+          Submit 
+        </button>
+        <butto
+          class="w3-btn "
+          id="returnBtn"
+          type="submit">
+          Return
+        </button>
+      </p>
+    </div>
+    <!-- modal -->
     <!-- //main -->
     <!-- js -->
     <script src="../addTeamTask.js"></script>
