@@ -7,10 +7,24 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2_QGV5YilMcrElZktnPEcdge_gXYHbKA&callback=initMap&libraries=&v=weekly&libraries=places"
       defer
     ></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
     <link rel="stylesheet" type="text/css" href="/css/map.css" />
   </head>
 
   <body>
+    <ul class="places">
+      <li>
+        <a style="color: #04aaaa">SHOW ME: </a>
+      </li>
+      <li><a>Cafe</a></li>
+      <li><a>Bar</a></li>
+      <li><a>Restaurant</a></li>
+      <li><a>Supermarket</a></li>
+      <li><a>Electronic Store</a></li>
+      <li><a>ATM</a></li>
+      <li><input class="radius" placeholder="Enter radius" /></li>
+    </ul>
+
     <div id="map"></div>
   </body>
   <script src="../map.js"></script>
