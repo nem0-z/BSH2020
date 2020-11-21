@@ -8,7 +8,8 @@ var remName = document.getElementById("remName");
 var remDescription = document.getElementById("remDescription");
 var remTime = document.getElementById("remTime");
 var remIntervalTime = document.getElementById("remIntervalTime");
-var buttonRepeating = document.getElementById("show-password");
+var buttonRepeating = document.getElementById("buttonRepeating");
+var unusedElements = document.getElementById("unusedForEditingReminder");
 
 //function for creating list item in reminder list
 function createReminder(id, idreminder, type, name, description, date, active) {
@@ -191,40 +192,40 @@ function setAllTimers() {
 }
 
 function openReminderModal(idreminder, name, description, dateToEdit) {
+  //show modal
   addReminderModal.style.display = "block";
+
   if (idreminder) {
     //edit
+
+    //hide unused elements
+    unusedElements.style.display = "none";
+    submitButton.textContent = "SAVE";
+
+    //fill inputs with existing data
     remName.value = name;
     remDescription.value = description;
-    if (dateToEdit != "") remTime.value = dateToEdit;
-  } else {
-    //add
-    document.getElementById("remIntervalTime").disabled = true;
 
     submitButton.onclick = function () {
-      var txt_name = remName.value;
-      var txt_description = remDescription.value;
-      var txt_time = remTime.value;
-      var txt_interval = remIntervalTime.value;
-
-      const remDate = new Date(new Date(txt_time).getTime() + 3600 * 1000)
-        .toISOString()
-        .slice(0, 19)
-        .replace("T", " ");
-      // puno if-ova nekih da vidim jel sve sto treba bit tu
-      // jos ifova
-      // else
-      // ......
-
-      let data = {
-        name: txt_name,
-        description: txt_description,
-        creator: id,
-        dateBegin: remDate,
-        type: !buttonRepeating.checked,
-        time: txt_interval,
-      };
+      let data = fetchData(idreminder);
       console.log(data);
+      sendHttpRequest("PUT", "http://localhost:3000/auth/editReminder", data)
+        .then((responseData) => {
+          location.reload();
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    };
+  } else {
+    //add
+    submitButton.textContent = "ADD";
+    unusedElements.style.display = "block";
+    remIntervalTime.disabled = true;
+    buttonRepeating.checked = false;
+
+    submitButton.onclick = function () {
+      let data = fetchData();
       sendHttpRequest("POST", "http://localhost:3000/auth/addReminder", data)
         .then((responseData) => {
           location.reload();
@@ -234,6 +235,38 @@ function openReminderModal(idreminder, name, description, dateToEdit) {
         });
     };
   }
+}
+
+function fetchData(idreminder) {
+  let txt_name = remName.value;
+  let txt_description = remDescription.value;
+
+  // puno if-ova nekih da vidim jel sve sto treba bit tu
+  // jos ifova
+  // else
+  // ......
+
+  let data = {
+    name: txt_name,
+    description: txt_description
+  };
+
+  if (idreminder) {
+    data.idreminder = idreminder;
+  } else {
+    let txt_time = remTime.value;
+    const remDate = new Date(new Date(txt_time).getTime() + 3600 * 1000)
+      .toISOString()
+      .slice(0, 19)
+      .replace("T", " ");
+    data.dateBegin = remDate;
+    let txt_interval = remIntervalTime.value;
+    data.time = txt_interval;
+    data.creator = id;
+    data.type = !buttonRepeating.checked;
+  }
+
+  return data;
 }
 
 addReminderBtn.onclick = function () {
@@ -250,10 +283,14 @@ window.onclick = function (event) {
   }
 };
 
-buttonRepeating.onclick = function () {
-  document.getElementById("remIntervalTime").disabled = false;
-  document.getElementById("remIn");
-};
+buttonRepeating.addEventListener("click", function () {
+  console.log(buttonRepeating.checked);
+  if (buttonRepeating.checked) {
+    remIntervalTime.disabled = false;
+  } else {
+    remIntervalTime.disabled = true;
+  }
+});
 
 document.addEventListener("DOMContentLoaded", function () {
   sendHttpRequest(
