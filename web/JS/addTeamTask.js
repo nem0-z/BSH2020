@@ -101,6 +101,7 @@ function addNewTask(
       if (assignee == userid) {
         innerHTML = "You are working on this task";
       } else {
+        btnDone.style.cursor = "default";
         innerHTML = `Task is being worked on by ${username}`;
       }
     } else {
