@@ -66,7 +66,7 @@ exports.teamtasks = function (req, res) {
         if (err) {
           addResponse(response_body, "402", "No creator", undefined);
         } else {
-          for (let i = 0; i < results.length; ++i) {
+          for (let i = 0; i < response_body.data.length; ++i) {
             response_body.data[i].creatorName = results[i].username;
           }
         }
@@ -134,6 +134,63 @@ exports.showsolution = function (req, res) {
   });
 };
 
+
+exports.makenewtask = function (req, res) {
+  const response_body = {};
+  const { title, urgent, assignee, description, iduser, type } = req.body;
+  const assigneeName = assignee ? assignee : null;
+  let assigneeID = null;
+  const query1 = "SELECT iduser FROM user WHERE username=?;";
+  //First fetch user ID
+  db.query(query1, [assigneeName], (err, results) => {
+    if (err) {
+      addResponse(response_body, "400", err.message, undefined);
+    } else {
+      const noResults = results.length === 0;
+      const noUser = noResults && assignee != "";
+      const noAssignee = noResults && assignee == "";
+      if (noUser) {
+        addResponse(
+          response_body,
+          "401",
+          "User with that name does not exist.",
+          undefined
+        );
+        res.json(response_body);
+      } else if (noAssignee || !noResults) {
+        if (!noAssignee) {
+          assigneeID = results[0].iduser;
+        }
+        //Insert goal and task
+        const query2 = "INSERT INTO goal VALUES(null,?,?,?);";
+        db.query(
+          query2,
+          [title, description, parseInt(iduser)],
+          (err, results) => {
+            if (err) {
+              addResponse(response_body, "402", err.message, undefined);
+            } else {
+              //Callback hell
+              const query3 =
+                "INSERT INTO task VALUES(null,?,null,CURRENT_DATE,LAST_INSERT_ID(),?,?);";
+              db.query(query3, [type, assigneeID, urgent], (err, results) => {
+                if (err) {
+                  addResponse(response_body, "403", err.message, undefined);
+                } else {
+                  addResponse(response_body, "200", "", results);
+                }
+                res.json(response_body);
+              });
+            }
+          }
+        );
+      } else {
+        addResponse(response_body, "405", "End of the world.", undefined);
+      }
+    }
+  });
+};
+
 exports.calendar = function (req, res) {
   const response_body = {};
   console.log("test");
@@ -162,3 +219,4 @@ exports.calendar = function (req, res) {
 
 
 }
+

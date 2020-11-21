@@ -5,11 +5,15 @@ function addNewTask(
   newDate,
   newCreator,
   resolved,
+  urgent,
   type
 ) {
   // create new task item
   const newTask = document.createElement("li");
   newTask.setAttribute("class", "taskItem");
+  if (resolved) {
+    newTask.style.opacity = "0.5";
+  }
   newTask.setAttribute("id", newID);
 
   // create new task header
@@ -17,11 +21,16 @@ function addNewTask(
   taskHeader.setAttribute("class", "taskHeader");
 
   const img2 = document.createElement("img");
-  let src = "nonurgent.png";
-  if (resolved !== null) {
-    src = "done.png";
-  } else if (type === 1) {
-    src = "urgent.png";
+  if (type === 1) {
+    src = "feature.png";
+  } else if (type === 2) {
+    src = "bug.png";
+  } else if (type === 3) {
+    src = "report.png";
+  } else if (type === 4) {
+    src = "support.png";
+  } else {
+    src = "maintenance.png";
   }
   img2.setAttribute("src", src);
   img2.setAttribute("style", "width:85px");
