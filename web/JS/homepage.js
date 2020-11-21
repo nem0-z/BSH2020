@@ -46,7 +46,62 @@ function createReminder(id, idreminder, type, name, description, date) {
 
   reminder.appendChild(textDiv);
 
+  const dateSpan = document.createElement("span");
+  dateSpan.setAttribute("class", "time w3-bar-item w3-right w3-large");
+  if (type) {
+    dateSpan.classList.add("onetime");
+    dateSpan.setAttribute("data-date", new Date(date));
+  } else {
+    dateSpan.classList.add("repeating");
+  }
+  reminder.appendChild(dateSpan);
+
   return reminder;
+}
+function updateTime(date) {
+  //function for calculating time left
+  let now = new Date().getTime();
+  let distance = date - now;
+
+  if (distance <= 0) {
+    return "";
+  }
+
+  let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  let text = "";
+  if (days) text += days + "d " + hours + "h " + minutes + "m ";
+  else {
+    if (hours) text += hours + "h " + minutes + "m ";
+    else {
+      if (minutes) text += minutes + "m ";
+    }
+  }
+  text += seconds + "s";
+
+  return text;
+}
+
+function setAllTimers() {
+  let onetimes = document.getElementsByClassName("onetime");
+  for (const element of onetimes) {
+    let time = new Date(element.dataset.date).getTime();
+    let text = updateTime(time);
+    if (text != "") {
+      element.textContent = text;
+    } else {
+      let name = element.parentNode.getElementsByClassName("name")[0]
+        .textContent;
+      let description = element.parentNode.getElementsByClassName(
+        "description"
+      )[0].textContent;
+
+      reminderList.removeChild(element.parentNode);
+    }
+  }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -91,3 +146,5 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .catch((error) => alert(error));
 });
+
+var intervalFunction = window.setInterval(setAllTimers, 1000);
