@@ -1,53 +1,61 @@
-# DBM
-
-# Bicom Systems Hackathon 2020
-
-## Zadatak
-
-Od timova očekujemo da u 48 sati kreiraju web ili mobilnu aplikaciju kao idejno rješenje za problem/izazov koji će biti podijeljen sa njima pred sami početak Hackathon-a.
-
-## Bitni datumi
-
-- **Ceremonija otvaranja**: 20. novembar, 14-15h 
-- **Pitching sesije**: 22. novembar, 15-18h
-- **Ceremonija zatvaranja (proglašenje pobjednika)**: 27. novembar, 14-15h
-
+# TimeMaster
 ---
 
-- **Hacking**: 20. novembar, 15h - 22. novembar, 15h
-- **Support Session** ```#4```: 20. novembar, 17-18h 
-- **Support Session** ```#5```: 21. novembar, 12-13h 
-- **Support Session** ```#6```: 22. novembar, 11-12h
+**TimeMaster** was made by **DBM**. We are all students at the Faculty of Electrical engineering Tuzla. <br/>Our team members are:
+- Adna Sakovic
+- Ajla Glumcevic
+- Zlatan Radovanovic
+- Emir Halilcevic
+- Eldar Hidanovic
 
-Takmičari će na svoje email adrese dobiti pozive za svaki od navedenih događaja.
+This project was made as a part of the 48 hour long **Bicom Systems Hackathon 2020** :rocket:.
 
-## Mentorski parovi
+We made **TimeMaster** with only one thought in mind: helping students, remote workers (and basically everyone else who needs it) to organise their daily routine. When working alone we often find ourselves spending hours in front of the computer and it makes it very hard to keep track how much time has pased. This is why we think that out app could be useful for a large group of people to help them organise their everyday tasks and time in general, all whilst being aware to also take a break sometimes if there is no one to remind them to do so.
 
-Za prikaz mentorskih parova, molimo vas da pogledate tabelu ispod.
+Since computers are the most frequently used device for basically any type of work from home we chose to make a web app. <br/> For frontend we used:
+- **HTML5** 
+- **CSS**
+- **JavaScript**
+and for backend:
+- **Node.js**
+- **MySQL**
 
-<table>
-<tr><td>
+In the making of **TimeMaster** we used a few open source solutions. You can take a look at them below:
+- https://github.com/CodyHouse/codyhouse-framework
+- https://cloud.google.com/maps-platform/
+- https://www.w3schools.com/w3css/4/w3.css
 
-| Mentorski par  | Mentor  | Tim |
-|:----------|:----------|:----------|
-| #1    | Nihad Pasalic| Lorem Ipsum   |
-| #2    | Kenan Hadzihasanovic| DBM    |
-| #3    | Adnan Dizdarevic| blueBit    |
-| #4    | Semir Karic| Peaky Blinders  |
-| #5    | Elvis Oric| CtrlAltDefeat    |
-| #6    | Tarik Omerćehajic| signum    |
-| #7    | Armin Omanovic| Angry Nerds  |
+**TimeMaster** is a web-based task manager, daily planner and health adviser.
 
-</td><td>
+**TimeMaster** can be used to:
+- :hourglass: organise your team tasks
+- :hourglass: organise your own tasks
+- :date: plan your day
+- :zap: keep focused
+- :eyeglasses: remember to take a break
+- :runner: stay active and healthy
+- :earth_americas: find nearby places to work from
 
-| Mentorski par  | Mentor  | Tim |
-|:----------|:----------|:----------|
-| #8    | Asmir Selimovic| Visiot Team  |
-| #9    | Semir Omerovic | ImpeccaCode  |
-| #10    | Tarik Fazlic| Čelik          |
-| #11   | Tarik Dahic| Debugger Team    |
-| #12    | Anes Sprecic| Triple A       |
-| #13    | Mustafa Spahic| AMH Creations|
-| #14    | Ajnur Jukan| Indexi          |
+**Team Tasks** is meant for keeping steady workflow between you and your team. You can take a look at other teammates tasks and also take over a free task. If you are a team leader you'll have the ability to create new tasks and assign them.<br/>For each solved task you can take a look at the solution and see who solved it. If you take over a task you can choose to add it to your personal calendar.
 
-</td></tr> </table>
+**My Tasks** is meant for keeping track of your tasks only. If you or your team leader assigned you a task you will have the ability to attach a solution.
+
+**Calendar** is the place where your tasks for the current week will show up organised by day, time and duration. You will also have insight in both your reminders and health tips.
+
+**Reminders** will help you not to forget all your important obligations throughout the week by sending you a notification. There are two types of reminders:
+- one time reminder
+- repeating reminder
+The latter one will alert you in specific time intervals.
+
+**Health** while working for longer periods of time you'll be getting occasional reminders to take a break, stretch your legs, get a drink, rest your eyes...
+
+**Map** allows you to scan your current location in a custom radius for places of interest. From cafes and bars to libraries, **TimeMaster** gives you directions like a native would. Regardless of your city knowledge you will surely discover something new with our map.
+
+---
+# How to run TimeMaster
+In order to run **TimeMaster** you'll need Node.js, MySQL and git installed on your system.
+> ```sh
+> $ git clone https://github.com/Bicom-Systems-Hackathon/DBM.git
+> $ cd DBM/web
+> $ node webServer.js
+> ```
