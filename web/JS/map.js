@@ -2,42 +2,56 @@ var map;
 var service;
 var infowindow;
 var infowindowOpened;
-var markersArray = [];
+var radius;
+var type;
+var isOpen = false;
 
-function initMap() {
-  infowindow = new google.maps.InfoWindow();
+function initMap(myRadius, myType) {
+  if (isOpen) {
+    infowindow = new google.maps.InfoWindow();
+    map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 15,
+    });
 
-  map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 15,
-  });
+    var request = {
+      query: "stupine",
+      fields: ["name", "geometry"],
+    };
 
-  var request = {
-    query: "stupine",
-    fields: ["name", "geometry"],
-  };
-
-  service = new google.maps.places.PlacesService(map);
-  service.findPlaceFromQuery(request, function (result, status) {
-    if (status === google.maps.places.PlacesServiceStatus.OK) {
-      const marker = createMarker(result[0], false, undefined); //potentially this could be 'you are here!' marker
-      const latitude = result[0].geometry.location.lat();
-      const longitude = result[0].geometry.location.lng();
-      const place = {
-        location: new google.maps.LatLng(latitude, longitude),
-        radius: 1000,
-        type: ["cafe"],
-      };
-      map.setCenter(result[0].geometry.location);
-      var circle = new google.maps.Circle({
-        map: map,
-        radius: 1000,
-        fillColor: "#b3b3ba",
-      });
-      circle.bindTo("center", marker, "position");
-      findAccessPoints(place);
-    }
-  });
+    service = new google.maps.places.PlacesService(map);
+    service.findPlaceFromQuery(request, function (result, status) {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        const marker = createMarker(result[0], false, undefined); //potentially this could be 'you are here!' marker
+        const latitude = result[0].geometry.location.lat();
+        const longitude = result[0].geometry.location.lng();
+        console.log(myRadius, myType);
+        const place = {
+          location: new google.maps.LatLng(latitude, longitude),
+          radius: myRadius,
+          type: myType,
+        };
+        map.setCenter(result[0].geometry.location);
+        var circle = new google.maps.Circle({
+          map: map,
+          radius: myRadius,
+          fillColor: "#b3b3ba",
+        });
+        circle.bindTo("center", marker, "position");
+        findAccessPoints(place);
+      }
+    });
+  }
 }
+const showMarkerBtn = document.getElementById("showMarkerBtn");
+showMarkerBtn.addEventListener("click", (e) => {
+  radius = document.getElementById("radius").value;
+  if (!radius || !type) {
+    alert("Please select type and radius.");
+  } else {
+    isOpen = true;
+    initMap(parseInt(radius), type);
+  }
+});
 
 function findAccessPoints(place) {
   service.nearbySearch(place, (results) => {
@@ -49,7 +63,6 @@ function findAccessPoints(place) {
 
 function parseAP(accessPoint) {
   const name = accessPoint.name;
-  const place_id = accessPoint.place_id;
   const rating = accessPoint.rating;
   const address = accessPoint.vicinity;
   const types = accessPoint.types;
@@ -114,13 +127,10 @@ function createMarker(accessPoint, display, infowindow) {
 }
 
 function setMarkerType(event) {
-  return event.innerHTML.toLowerCase();
+  const parent = event.parentNode.parentNode;
+  type = event.innerHTML.toLowerCase();
+  for (let i = 1; i < parent.childNodes.length; i += 2) {
+    parent.childNodes[i].firstChild.style.color = "#d3d3d3";
+  }
+  event.style.color = "#04aaaa";
 }
-
-const showMarkerBtn = document.getElementById("showMarkerBtn");
-
-showMarkerBtn.addEventListener("click", (e) => {
-  const radius = document.getElementById("radius").value;
-
-  // call your function
-});
