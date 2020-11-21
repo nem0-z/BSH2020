@@ -11,5 +11,6 @@ router.route("/showsolution").post(controller.showsolution);
 router.route("/makenewtask").post(controller.makenewtask);
 router.route('/getOnetimeReminders').get(controller.getOnetimeReminders);
 router.route('/getRepeatingReminders').get(controller.getRepeatingReminders);
+router.route('/addReminder').post(controller.addReminder);
 
 module.exports = router;
