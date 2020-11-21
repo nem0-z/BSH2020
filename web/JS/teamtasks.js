@@ -5,6 +5,7 @@ const returnBtn = document.getElementById("returnBtn");
 const date = document.getElementById("date");
 const timebegin = document.getElementById("timebegin");
 const timeend = document.getElementById("timeend");
+const subheader = document.getElementById("subheader");
 
 window.onload = () => {
   const userRole = localStorage.getItem("role");
@@ -26,10 +27,11 @@ window.onload = () => {
         );
       });
       if (userRole == 2) {
+        subheader.style.display = "block";
         const leaderBtn = document.getElementById("leaderAddBtn");
         leaderBtn.style.display = "block";
         leaderBtn.addEventListener("click", makeNewTask);
-      } //This not good, deal with this later
+      }
     })
     .catch((error) => alert(error));
 };
