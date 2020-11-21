@@ -24,7 +24,7 @@
         <button
           onclick="makeNewTask()"
           id="leaderAddBtn"
-          class="w3-btn w3-round"
+          class="w3-btn w3-round submitBtn"
         >
           Create New Task
         </button>
@@ -38,7 +38,38 @@
 
     <!-- Modal -->
     <div id="myModal" class="modal">
-      <input type="checkbox">Add to calendar</input>
+      <label"
+        >Add task to calendar
+      </label>
+      <p>
+        <input
+          placeholder="Time Begin"
+          class="w3-input w3-border w3-white"
+          id="timebegin"
+          type="text"
+        />
+      </p>
+      <p>
+        <input
+          placeholder="Time End"
+          class="w3-input w3-border w3-white"
+          id="timeend"
+          type="text"
+        />
+      </p> 
+      <p style="text-align: center">
+        <button
+          class="w3-btn "
+          id="submitBtn">
+          Submit 
+        </button>
+        <butto
+          class="w3-btn "
+          id="returnBtn"
+          type="submit">
+          Return
+        </button>
+      </p>
     </div>
     <!-- modal -->
     <!-- //main -->

@@ -40,39 +40,39 @@ function showSolution(event) {
 function appendToMyTasks(event) {
   showModal(event);
 
-  const btnDone = event.target;
-  const taskItem = btnDone.parentElement.parentElement;
-  const taskID = taskItem.id;
-  const iduser = localStorage.getItem("id");
+  // const btnDone = event.target;
+  // const taskItem = btnDone.parentElement.parentElement;
+  // const taskID = taskItem.id;
+  // const iduser = localStorage.getItem("id");
 
-  const data = {
-    taskID: taskID,
-    iduser: iduser,
-  };
+  // const data = {
+  //   taskID: taskID,
+  //   iduser: iduser,
+  // };
 
-  const link = "http://localhost:3000/auth/appendmytask";
-  const xhr = new XMLHttpRequest();
+  // const link = "http://localhost:3000/auth/appendmytask";
+  // const xhr = new XMLHttpRequest();
 
-  xhr.open("POST", link, true);
-  xhr.setRequestHeader("Content-Type", "application/json");
+  // xhr.open("POST", link, true);
+  // xhr.setRequestHeader("Content-Type", "application/json");
 
-  xhr.onerror = function () {
-    alert("Network error");
-  };
+  // xhr.onerror = function () {
+  //   alert("Network error");
+  // };
 
-  xhr.onload = function () {
-    if (xhr.status == 200 && xhr.readyState == 4) {
-      const data = JSON.parse(this.response);
-      if (data.status == 200) {
-        location.reload();
-      } else {
-        alert(data.message);
-      }
-    } else {
-      alert("Server error");
-    }
-  };
-  xhr.send(JSON.stringify(data));
+  // xhr.onload = function () {
+  //   if (xhr.status == 200 && xhr.readyState == 4) {
+  //     const data = JSON.parse(this.response);
+  //     if (data.status == 200) {
+  //       location.reload();
+  //     } else {
+  //       alert(data.message);
+  //     }
+  //   } else {
+  //     alert("Server error");
+  //   }
+  // };
+  // xhr.send(JSON.stringify(data));
 }
 
 function makeNewTask(event) {
