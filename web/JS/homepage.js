@@ -1,6 +1,7 @@
 var id = localStorage.getItem("id");
 var repeatingReminderList = document.getElementById("repeatingReminderList");
 var onetimeReminderList = document.getElementById("onetimeReminderList");
+var healthReminderList = document.getElementById("healthReminderList");
 var submitButton = document.getElementById("submitButton");
 var addReminderModal = document.getElementById("myModal");
 var addReminderBtn = document.getElementById("addReminder");
@@ -165,7 +166,7 @@ function setAllTimers() {
   for (const element of onetimes) {
     let time = new Date(element.dataset.date).getTime();
     let text = updateTime(time);
-    if (text != "") {
+    if (text != "" && text != "0s") {
       element.textContent = text;
     } else {
       let name = element.parentNode.getElementsByClassName("name")[0]
@@ -191,7 +192,7 @@ function setAllTimers() {
       element.dataset.timestamps = timestamps;
     }
     let text = updateTime(timestamps[last]);
-    if (text != "0s") {
+    if (text != "0s" && text != "0s") {
       element.textContent = text;
     } else {
       let name = element.parentNode.getElementsByClassName("name")[0]
@@ -307,6 +308,25 @@ function openNotificationModal(name, description) {
   audio.play();
 }
 
+function addHealthReminder(name, time) {
+  let data = {
+    name: name,
+    description: "",
+    creator: id,
+    type: false,
+    dateBegin: new Date().toISOString().slice(0, 19).replace("T", " "),
+    time: time,
+  };
+
+  sendHttpRequest("POST", "http://localhost:3000/auth/addReminder", data)
+    .then((responseData) => {
+      location.reload();
+    })
+    .catch((error) => {
+      alert(error);
+    });
+}
+
 addReminderBtn.onclick = function () {
   openReminderModal();
 };
@@ -366,7 +386,8 @@ document.addEventListener("DOMContentLoaded", function () {
           timestamps,
           active
         );
-        repeatingReminderList.appendChild(reminder);
+        if (element.description == "") healthReminderList.appendChild(reminder);
+        else repeatingReminderList.appendChild(reminder);
       });
     })
     .catch((error) => alert(error));

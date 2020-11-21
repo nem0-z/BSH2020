@@ -41,6 +41,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <button type="button" id="addReminder" class="btn btn-primary"><i class="fa fa-plus-circle"></i> ADD
                 REMINDER</button>
 
+            <div class="dropdown">
+                <button class="dropbtn btn"><i class="fa fa-plus-circle"></i> ADD HEATTH REMINDER</button>
+                <div class="dropdown-content">
+                  <a onclick="addHealthReminder('Do simple stretching exerises', 60)">Do simple stretching exercises <i class="fa fa-repeat"> 60 min</i></a>
+                  <a onclick="addHealthReminder('Drink glass of water', 30)">Drink glass of water <i class="fa fa-repeat"> 30 min</i></a>
+                  <a onclick="addHealthReminder('Relax eyes', 10)">Relax eyes <i class="fa fa-repeat"> 10 min</i></a>
+                </div>
+            </div>
+
             <!-- The Modal -->
             <div id="myModal" class="modal">
 
@@ -108,6 +117,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <!-- Onetime Reminder List -->
             <h1 class="reminder-title">Onetime reminders</h1>
             <ul id="onetimeReminderList" class="w3-ul w3-card-4"></ul>
+
+            <!-- Health Reminder List -->
+            <h1 class="reminder-title">Health reminders</h1>
+            <ul id="healthReminderList" class="w3-ul w3-card-4"></ul>
 
         </div>
         <footer>
