@@ -23,6 +23,10 @@ function createReminder(id, idreminder, type, name, description, date, active) {
     "class",
     "fa fa-edit w3-bar-item w3-button w3-white w3-xlarge w3-right"
   );
+  editIcon.addEventListener("click", function () {
+    let dateToEdit = type ? date : "";
+    openReminderModal(idreminder, name, description, dateToEdit);
+  });
   reminder.appendChild(editIcon);
 
   const img = document.createElement("img");
@@ -186,12 +190,55 @@ function setAllTimers() {
   }
 }
 
-function openReminderModal() {
+function openReminderModal(idreminder, name, description, dateToEdit) {
   addReminderModal.style.display = "block";
-  document.getElementById("remIntervalTime").disabled = true;
+  if (idreminder) {
+    //edit
+    remName.value = name;
+    remDescription.value = description;
+    if (dateToEdit != "") remTime.value = dateToEdit;
+  } else {
+    //add
+    document.getElementById("remIntervalTime").disabled = true;
+
+    submitButton.onclick = function () {
+      var txt_name = remName.value;
+      var txt_description = remDescription.value;
+      var txt_time = remTime.value;
+      var txt_interval = remIntervalTime.value;
+
+      const remDate = new Date(new Date(txt_time).getTime() + 3600 * 1000)
+        .toISOString()
+        .slice(0, 19)
+        .replace("T", " ");
+      // puno if-ova nekih da vidim jel sve sto treba bit tu
+      // jos ifova
+      // else
+      // ......
+
+      let data = {
+        name: txt_name,
+        description: txt_description,
+        creator: id,
+        dateBegin: remDate,
+        type: !buttonRepeating.checked,
+        time: txt_interval,
+      };
+      console.log(data);
+      sendHttpRequest("POST", "http://localhost:3000/auth/addReminder", data)
+        .then((responseData) => {
+          location.reload();
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    };
+  }
 }
 
-addReminderBtn.onclick = openReminderModal;
+addReminderBtn.onclick = function () {
+  openReminderModal();
+};
 
 addRemSpan.onclick = function () {
   addReminderModal.style.display = "none";
@@ -206,39 +253,6 @@ window.onclick = function (event) {
 buttonRepeating.onclick = function () {
   document.getElementById("remIntervalTime").disabled = false;
   document.getElementById("remIn");
-};
-
-submitButton.onclick = function () {
-  var txt_name = remName.value;
-  var txt_description = remDescription.value;
-  var txt_time = remTime.value;
-  var txt_interval = remIntervalTime.value;
-
-  const remDate = new Date(new Date(txt_time).getTime() + 3600 * 1000)
-    .toISOString()
-    .slice(0, 19)
-    .replace("T", " ");
-  // puno if-ova nekih da vidim jel sve sto treba bit tu
-  // jos ifova
-  // else
-  // ......
-
-  let data = {
-    name: txt_name,
-    description: txt_description,
-    creator: id,
-    dateBegin: remDate,
-    type: !buttonRepeating.checked,
-    time: txt_interval,
-  };
-  console.log(data);
-  sendHttpRequest("POST", "http://localhost:3000/auth/addReminder", data)
-    .then((responseData) => {
-      location.reload();
-    })
-    .catch((error) => {
-      alert(error);
-    });
 };
 
 document.addEventListener("DOMContentLoaded", function () {
