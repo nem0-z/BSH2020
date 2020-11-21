@@ -1,5 +1,14 @@
 var id = localStorage.getItem("id");
 var reminderList = document.getElementById("reminderList");
+var submitButton = document.getElementById("submitButton");
+var addReminderModal = document.getElementById("myModal");
+var addReminderBtn = document.getElementById("addReminder");
+var addRemSpan = document.getElementsByClassName("close")[0];
+var remName = document.getElementById("remName");
+var remDescription = document.getElementById("remDescription");
+var remTime = document.getElementById("remTime");
+var remIntervalTime = document.getElementById("remIntervalTime");
+var buttonRepeating = document.getElementById("show-password");
 
 //function for creating list item in reminder list
 function createReminder(id, idreminder, type, name, description, date) {
@@ -99,7 +108,7 @@ function setAllTimers() {
       let description = element.parentNode.getElementsByClassName(
         "description"
       )[0].textContent;
-        alert(name);
+      alert(name);
       reminderList.removeChild(element.parentNode);
     }
   }
@@ -130,6 +139,61 @@ function setAllTimers() {
     }
   }
 }
+
+function openReminderModal() {
+  addReminderModal.style.display = "block";
+  document.getElementById("remIntervalTime").disabled = true;
+}
+
+addReminderBtn.onclick = openReminderModal;
+
+addRemSpan.onclick = function () {
+  addReminderModal.style.display = "none";
+};
+
+window.onclick = function (event) {
+  if (event.target == addReminderModal) {
+    addReminderModal.style.display = "none";
+  }
+};
+
+buttonRepeating.onclick = function () {
+  document.getElementById("remIntervalTime").disabled = false;
+  document.getElementById("remIn");
+};
+
+submitButton.onclick = function () {
+  var txt_name = remName.value;
+  var txt_description = remDescription.value;
+  var txt_time = remTime.value;
+  var txt_interval = remIntervalTime.value;
+
+  const remDate = new Date(new Date(txt_time).getTime() + 3600 * 1000)
+    .toISOString()
+    .slice(0, 19)
+    .replace("T", " ");
+  // puno if-ova nekih da vidim jel sve sto treba bit tu
+  // jos ifova
+  // else
+  // ......
+
+  let data = {
+    name: txt_name,
+    description: txt_description,
+    creator: id,
+    dateBegin: remDate,
+    type: !buttonRepeating.checked,
+    time: txt_interval,
+  };
+  console.log(data);
+  sendHttpRequest("POST", "http://localhost:3000/auth/addReminder", data)
+    .then((responseData) => {
+      location.reload();
+    })
+    .catch((error) => {
+      alert(error);
+    });
+};
 
 document.addEventListener("DOMContentLoaded", function () {
   sendHttpRequest(
