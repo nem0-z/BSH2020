@@ -1,5 +1,6 @@
 var id = localStorage.getItem("id");
-var reminderList = document.getElementById("reminderList");
+var repeatingReminderList = document.getElementById("repeatingReminderList");
+var onetimeReminderList = document.getElementById("onetimeReminderList");
 var submitButton = document.getElementById("submitButton");
 var addReminderModal = document.getElementById("myModal");
 var addReminderBtn = document.getElementById("addReminder");
@@ -19,10 +20,10 @@ var btnCloseNotificationModal = document.getElementById(
   "closeNotificationModal"
 );
 
-//function for creating list item in reminder list
+// function for creating list item in reminder list
 function createReminder(id, idreminder, type, name, description, date, active) {
-  //type = 1 => onetime reminder
-  //type = 0 => repeating reminder
+  // type = 1 => onetime reminder
+  // type = 0 => repeating reminder
 
   const reminder = document.createElement("li");
   reminder.setAttribute("class", "w3-bar");
@@ -71,14 +72,17 @@ function createReminder(id, idreminder, type, name, description, date, active) {
   const dateSpan = document.createElement("span");
   dateSpan.setAttribute("class", "time w3-bar-item w3-right w3-large");
   if (type) {
+    // one time
     dateSpan.classList.add("onetime");
     dateSpan.setAttribute("data-date", new Date(date));
   } else {
+    // repeating
     dateSpan.classList.add("repeating");
     dateSpan.dataset.timestamps = date;
   }
   reminder.appendChild(dateSpan);
 
+  // repeating
   if (!type) {
     const slider = document.createElement("label");
     slider.setAttribute("class", "switch");
@@ -154,7 +158,9 @@ function updateTime(date) {
   return text;
 }
 
+// set the time left on each reminder
 function setAllTimers() {
+  // for one time reminders
   let onetimes = document.getElementsByClassName("onetime");
   for (const element of onetimes) {
     let time = new Date(element.dataset.date).getTime();
@@ -171,6 +177,7 @@ function setAllTimers() {
       reminderList.removeChild(element.parentNode);
     }
   }
+  // for repeating reminders
   let repeatings = document.getElementsByClassName("repeating");
   for (const element of repeatings) {
     let timestamps = Array.from(element.dataset.timestamps.split(","), (x) =>
@@ -199,6 +206,7 @@ function setAllTimers() {
   }
 }
 
+// function for opening modal
 function openReminderModal(idreminder, name, description, dateToEdit) {
   //show modal
   addReminderModal.style.display = "block";
@@ -358,7 +366,7 @@ document.addEventListener("DOMContentLoaded", function () {
           timestamps,
           active
         );
-        reminderList.appendChild(reminder);
+        repeatingReminderList.appendChild(reminder);
       });
     })
     .catch((error) => alert(error));
@@ -379,7 +387,7 @@ document.addEventListener("DOMContentLoaded", function () {
             element.description,
             element.dateBegin
           );
-          reminderList.appendChild(reminder);
+          onetimeReminderList.appendChild(reminder);
         }
       });
     })

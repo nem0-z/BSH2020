@@ -2,6 +2,7 @@ window.onload = () => {
   const userRole = localStorage.getItem("role");
   sendHttpRequest("POST", "http://localhost:3000/auth/teamtasks")
     .then((taskList) => {
+      //Show each task on html if query went through
       taskList.forEach((task) => {
         addNewTask(
           task.idtask,
@@ -16,11 +17,11 @@ window.onload = () => {
           task.type
         );
       });
-      if (userRole == 2) {
-        const leaderBtn = document.getElementById("leaderAddBtn");
-        leaderBtn.style.display = "block";
-        leaderBtn.addEventListener("click", makeNewTask);
-      }
+      // if (userRole == 2) {
+      //   const leaderBtn = document.getElementById("leaderAddBtn");
+      //   leaderBtn.style.display = "block";
+      //   leaderBtn.addEventListener("click", makeNewTask);
+      // } //This not good, deal with this later
     })
     .catch((error) => alert(error));
 };
@@ -46,29 +47,13 @@ function appendToMyTasks(event) {
     iduser: iduser,
   };
 
-  const link = "http://localhost:3000/auth/appendmytask";
-  const xhr = new XMLHttpRequest();
-
-  xhr.open("POST", link, true);
-  xhr.setRequestHeader("Content-Type", "application/json");
-
-  xhr.onerror = function () {
-    alert("Network error");
-  };
-
-  xhr.onload = function () {
-    if (xhr.status == 200 && xhr.readyState == 4) {
-      const data = JSON.parse(this.response);
-      if (data.status == 200) {
-        location.reload();
-      } else {
-        alert(data.message);
-      }
-    } else {
-      alert("Server error");
-    }
-  };
-  xhr.send(JSON.stringify(data));
+  sendHttpRequest("POST", "http://localhost:3000/auth/appendmytask", data)
+    .then((responseData) => {
+      location.reload();
+    })
+    .catch((error) => {
+      alert(error);
+    });
 }
 
 function makeNewTask(event) {
