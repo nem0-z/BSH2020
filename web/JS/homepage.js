@@ -10,6 +10,14 @@ var remTime = document.getElementById("remTime");
 var remIntervalTime = document.getElementById("remIntervalTime");
 var buttonRepeating = document.getElementById("buttonRepeating");
 var unusedElements = document.getElementById("unusedForEditingReminder");
+var notificationModal = document.getElementById("reminderNotificationModal");
+var notificationName = document.getElementById("notificationName");
+var notificationDescription = document.getElementById(
+  "notificationDescription"
+);
+var btnCloseNotificationModal = document.getElementById(
+  "closeNotificationModal"
+);
 
 //function for creating list item in reminder list
 function createReminder(id, idreminder, type, name, description, date, active) {
@@ -159,7 +167,7 @@ function setAllTimers() {
       let description = element.parentNode.getElementsByClassName(
         "description"
       )[0].textContent;
-      alert(name);
+      openNotificationModal(name, description);
       reminderList.removeChild(element.parentNode);
     }
   }
@@ -184,7 +192,7 @@ function setAllTimers() {
       let description = element.parentNode.getElementsByClassName(
         "description"
       )[0].textContent;
-      alert(name);
+      openNotificationModal(name, description);
 
       if (timestamps.lenght == 1) reminderList.removeChild(element.parentNode);
     }
@@ -248,7 +256,7 @@ function fetchData(idreminder) {
 
   let data = {
     name: txt_name,
-    description: txt_description
+    description: txt_description,
   };
 
   if (idreminder) {
@@ -269,6 +277,15 @@ function fetchData(idreminder) {
   return data;
 }
 
+function openNotificationModal(name, description) {
+  notificationModal.style.display = "block";
+  notificationName.textContent = name;
+  notificationDescription.textContent = description;
+
+  const audio = new Audio("../audio.m4a");
+  audio.play();
+}
+
 addReminderBtn.onclick = function () {
   openReminderModal();
 };
@@ -282,6 +299,10 @@ window.onclick = function (event) {
     addReminderModal.style.display = "none";
   }
 };
+
+btnCloseNotificationModal.addEventListener("click", function () {
+  notificationModal.style.display = 'none';
+});
 
 buttonRepeating.addEventListener("click", function () {
   console.log(buttonRepeating.checked);

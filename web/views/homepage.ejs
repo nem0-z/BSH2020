@@ -83,7 +83,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             <label class="label-intervalTime">
                                 <input disabled=true type="number" id="remIntervalTime" class="intervalTime"
                                     id="intervalTimeInput" name="intervalTimeime" placeholder="Interval" tabindex="5" />
-                                <span>Time Interval</span>
+                                <span>Time Interval (minutes)</span>
                             </label>
                         </div>
                     </div>
@@ -92,6 +92,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         Add</button>
                 </div>
             </div>
+
+            <div id="reminderNotificationModal" class="modal">
+				<div class="modal-content">
+					<h3 id="notificationName"></h3>
+					<p id="notificationDescription"></p>
+					<button id="closeNotificationModal">Close</button>
+				</div>
+			</div>
             
             <!-- Reminder List -->
             <ul id="reminderList" class="w3-ul w3-card-4"></ul>
