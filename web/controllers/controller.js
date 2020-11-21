@@ -229,41 +229,42 @@ exports.addReminder = function (req, res) {
   let query =
     "insert into reminder (idreminder, dateCreated, creator, name, description, dateBegin) values(null, now(), ?, ?, ?, ?);";
 
-  db.query(query, [creator, name, description, dateBegin], function (
-    err,
-    results
-  ) {
-    if (err) {
-      addResponse(response_body, "400", err.message, undefined);
-      res.json(response_body);
-    } else {
-      if (type) {
-        //onetime
-        query =
-          "insert into onetime (idonetime, idreminder) values (null, last_insert_id());";
-        db.query(query, function (err1, results1) {
-          if (err1) {
-            addResponse(response_body, "401", err.message, undefined);
-          } else {
-            addResponse(response_body, "200", "successful", undefined);
-          }
-          res.json(response_body);
-        });
+  db.query(
+    query,
+    [creator, name, description, dateBegin],
+    function (err, results) {
+      if (err) {
+        addResponse(response_body, "400", err.message, undefined);
+        res.json(response_body);
       } else {
-        //repeating
-        query =
-          "insert into repeating (idrepeating, time, idreminder, active) values (null, ?, last_insert_id(), 1);";
-        db.query(query, [time], function (err1, results1) {
-          if (err1) {
-            addResponse(response_body, "401", err1.message, undefined);
-          } else {
-            addResponse(response_body, "200", "successful", undefined);
-          }
-          res.json(response_body);
-        });
+        if (type) {
+          //onetime
+          query =
+            "insert into onetime (idonetime, idreminder) values (null, last_insert_id());";
+          db.query(query, function (err1, results1) {
+            if (err1) {
+              addResponse(response_body, "401", err.message, undefined);
+            } else {
+              addResponse(response_body, "200", "successful", undefined);
+            }
+            res.json(response_body);
+          });
+        } else {
+          //repeating
+          query =
+            "insert into repeating (idrepeating, time, idreminder, active) values (null, ?, last_insert_id(), 1);";
+          db.query(query, [time], function (err1, results1) {
+            if (err1) {
+              addResponse(response_body, "401", err1.message, undefined);
+            } else {
+              addResponse(response_body, "200", "successful", undefined);
+            }
+            res.json(response_body);
+          });
+        }
       }
     }
-  });
+  );
 };
 exports.calendar = function (req, res) {
   const response_body = {};
@@ -308,7 +309,6 @@ exports.changeReminderActivity = function (req, res) {
   });
 };
 
-
 exports.addtasktocalendar = function (req, res) {
   const response_body = {};
   const { eventdate, eventbegin, eventend, idgoal } = req.body;
@@ -319,28 +319,9 @@ exports.addtasktocalendar = function (req, res) {
 
   let query = "INSERT INTO event VALUES(null,?,?,?,?);";
 
-  db.query(query, [eventdate, eventbegin_, eventend_, idgoal], function (
-    err,
-    result
-  ) {
-    if (err) {
-      addResponse(response_body, "400", err.message, undefined);
-    } else {
-      addResponse(response_body, "200", "successful", undefined);
-    }
-    res.json(response_body);
-  });
-
-exports.editReminder = function (req, res) {
-  const response_body = {};
-  const { idreminder, name, description } = req.body;
-
-  let query =
-    "UPDATE reminder SET name = ?, description = ? WHERE idreminder = ?;";
-
   db.query(
     query,
-    [name, description, idreminder],
+    [eventdate, eventbegin_, eventend_, idgoal],
     function (err, result) {
       if (err) {
         addResponse(response_body, "400", err.message, undefined);
@@ -350,5 +331,21 @@ exports.editReminder = function (req, res) {
       res.json(response_body);
     }
   );
+};
 
+exports.editReminder = function (req, res) {
+  const response_body = {};
+  const { idreminder, name, description } = req.body;
+
+  let query =
+    "UPDATE reminder SET name = ?, description = ? WHERE idreminder = ?;";
+
+  db.query(query, [name, description, idreminder], function (err, result) {
+    if (err) {
+      addResponse(response_body, "400", err.message, undefined);
+    } else {
+      addResponse(response_body, "200", "successful", undefined);
+    }
+    res.json(response_body);
+  });
 };

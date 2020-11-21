@@ -25,11 +25,11 @@ window.onload = () => {
           task.type
         );
       });
-      // if (userRole == 2) {
-      //   const leaderBtn = document.getElementById("leaderAddBtn");
-      //   leaderBtn.style.display = "block";
-      //   leaderBtn.addEventListener("click", makeNewTask);
-      // } //This not good, deal with this later
+      if (userRole == 2) {
+        const leaderBtn = document.getElementById("leaderAddBtn");
+        leaderBtn.style.display = "block";
+        leaderBtn.addEventListener("click", makeNewTask);
+      } //This not good, deal with this later
     })
     .catch((error) => alert(error));
 };
@@ -56,15 +56,11 @@ function appendToMyTasks(event) {
     iduser: iduser,
   };
 
-
   sendHttpRequest("POST", "http://localhost:3000/auth/appendmytask", data)
-    .then((responseData) => {
-      location.reload();
-    })
+    .then((responseData) => {})
     .catch((error) => {
       alert(error);
     });
-
 }
 
 function makeNewTask(event) {
