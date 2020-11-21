@@ -1,6 +1,8 @@
 var modal = document.getElementById("myModal");
+var taskID = undefined;
 const submitBtn = document.getElementById("submitBtn");
 const returnBtn = document.getElementById("returnBtn");
+const date = document.getElementById("date");
 const timebegin = document.getElementById("timebegin");
 const timeend = document.getElementById("timeend");
 
@@ -46,7 +48,7 @@ function appendToMyTasks(event) {
 
   // const btnDone = event.target;
   // const taskItem = btnDone.parentElement.parentElement;
-  // const taskID = taskItem.id;
+  // taskID = taskItem.id;
   // const iduser = localStorage.getItem("id");
 
   // const data = {
@@ -96,17 +98,26 @@ returnBtn.addEventListener("click", () => {
 submitBtn.addEventListener("click", (e) => {
   e.preventDefault();
 
-  const eventend = new Date(timeend.value.toString());
+  const eventdate = date.value;
+  const eventbegin = timebegin.value;
+  const eventend = timeend.value;
 
-  if (eventend === "") {
+  if (eventdate === "" || eventbegin === "" || eventend === "") {
     alert("Empty fields!");
   } else {
     const data = {
+      eventdate: eventdate,
+      eventbegin: eventbegin,
       eventend: eventend,
+      idgoal: taskID,
     };
-    console.log(data);
-    sendHttpRequest("POST", "http://localhost:3000/auth/teamtasks", data)
+    sendHttpRequest(
+      "POST",
+      "http://localhost:3000/auth/addtasktocalendar",
+      data
+    )
       .then((responseData) => {
+        console.log(1);
         modal.style.display = "none";
         location.reload();
       })
