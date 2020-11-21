@@ -216,14 +216,15 @@ function openReminderModal(idreminder, name, description, dateToEdit) {
 
     submitButton.onclick = function () {
       let data = fetchData(idreminder);
-      console.log(data);
-      sendHttpRequest("PUT", "http://localhost:3000/auth/editReminder", data)
-        .then((responseData) => {
-          location.reload();
-        })
-        .catch((error) => {
-          alert(error);
-        });
+      if (data) {
+        sendHttpRequest("PUT", "http://localhost:3000/auth/editReminder", data)
+          .then((responseData) => {
+            location.reload();
+          })
+          .catch((error) => {
+            alert(error);
+          });
+      }
     };
   } else {
     //add
@@ -234,13 +235,15 @@ function openReminderModal(idreminder, name, description, dateToEdit) {
 
     submitButton.onclick = function () {
       let data = fetchData();
-      sendHttpRequest("POST", "http://localhost:3000/auth/addReminder", data)
-        .then((responseData) => {
-          location.reload();
-        })
-        .catch((error) => {
-          alert(error);
-        });
+      if (data) {
+        sendHttpRequest("POST", "http://localhost:3000/auth/addReminder", data)
+          .then((responseData) => {
+            location.reload();
+          })
+          .catch((error) => {
+            alert(error);
+          });
+      }
     };
   }
 }
@@ -250,20 +253,19 @@ function fetchData(idreminder) {
   let txt_description = remDescription.value;
   var txt_time = document.getElementById("remTime").value;
 
-  // puno if-ova nekih da vidim jel sve sto treba bit tu
+  // check if input is valid
   if (!idreminder) {
     if (!txt_time) {
       alert("Wrong input!\nTime is required!");
-      return "";
-    }
-    else if (buttonRepeating.checked == true && !remIntervalTime.value) {
+      return null;
+    } else if (buttonRepeating.checked == true && !remIntervalTime.value) {
       alert("Time interval is required for repeating reminders!");
-      return ""
+      return null;
     }
   }
   if (!txt_name || !txt_description) {
     alert("Wrong input!\nName and description are required!");
-    return "";
+    return null;
   }
   let data = {
     name: txt_name,
@@ -312,7 +314,7 @@ window.onclick = function (event) {
 };
 
 btnCloseNotificationModal.addEventListener("click", function () {
-  notificationModal.style.display = 'none';
+  notificationModal.style.display = "none";
 });
 
 buttonRepeating.addEventListener("click", function () {
