@@ -269,6 +269,7 @@ exports.addReminder = function (req, res) {
 exports.calendar = function (req, res) {
   const response_body = {};
   console.log("test");
+
   const query =
     "SELECT date, DAYNAME(timeBegin) AS day, " +
     "LPAD(HOUR(timeBegin), 2, 0) AS satPocetak, LPAD(MINUTE(timeBegin), 2, 0) as minPocetak, " +
