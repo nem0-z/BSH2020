@@ -1,0 +1,50 @@
+/* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+#map {
+  height: 90%;
+  /* The height is 400 pixels */
+  width: 100%;
+  /* The width is the width of the web page */
+}
+
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  height: 10%;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  background-color: black;
+  text-align: center;
+}
+
+li {
+  vertical-align: auto;
+  float: left;
+  padding-left: 45px;
+  padding-top: 35px;
+  display: inline;
+}
+
+li a {
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: 400;
+  text-decoration: none;
+  color: #d3d3d3;
+}
+
+li a:hover {
+  color: #04aaaa;
+}
+
+li .radius {
+  width: 100%;
+  font-size: 24px;
+}
