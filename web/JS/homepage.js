@@ -175,6 +175,7 @@ function setAllTimers() {
         "description"
       )[0].textContent;
       openNotificationModal(name, description);
+      sendNotification(name, description);
       onetimeReminderList.removeChild(element.parentNode);
     }
   }
@@ -201,6 +202,7 @@ function setAllTimers() {
         "description"
       )[0].textContent;
       openNotificationModal(name, description);
+      sendNotification(name, description);
 
       if (timestamps.lenght == 1) reminderList.removeChild(element.parentNode);
     }
@@ -306,6 +308,17 @@ function openNotificationModal(name, description) {
 
   const audio = new Audio("../audio.m4a");
   audio.play();
+}
+
+function sendNotification(name, body) {
+  if (window.Notification && Notification.permission !== "denied") {
+    Notification.requestPermission((status) => {
+      // status is "granted", if accepted by user
+      var n = new Notification(name, {
+        body: body,
+      });
+    });
+  }
 }
 
 function addHealthReminder(name, time) {
