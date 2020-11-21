@@ -8,13 +8,15 @@ function addNewTask(
   urgent,
   type
 ) {
-
   // create new task item
   const newTask = document.createElement("li");
   newTask.setAttribute("class", "taskItem");
   // check if the task is done
   if (resolved) {
     newTask.style.opacity = "0.5";
+  }
+  if (urgent) {
+    newTask.style.backgroundColor = "#BD3838";
   }
   newTask.setAttribute("id", newID);
 

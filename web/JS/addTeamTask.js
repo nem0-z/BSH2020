@@ -18,12 +18,15 @@ function addNewTask(
   if (resolved) {
     newTask.style.opacity = "0.5";
   }
+  if (urgent) {
+    newTask.style.backgroundColor = "#BD3838";
+  }
   newTask.setAttribute("id", newID);
 
   // create new task header
   const taskHeader = document.createElement("div");
   taskHeader.setAttribute("class", "taskHeader");
-  
+
   // choose task icon depending on the task type
   const img2 = document.createElement("img");
   if (type === 1) {
@@ -91,13 +94,12 @@ function addNewTask(
   creator.appendChild(creatorName);
   newTask.appendChild(creator);
 
-
   const time = document.createElement("div");
   time.setAttribute("class", "time");
   const date = document.createElement("span");
   date.innerHTML = newDate;
 
-  // create task status 
+  // create task status
   const btnDone = document.createElement("button");
   btnDone.setAttribute("class", "w3-btn w3-round-xxlarge btnDone");
   btnDone.setAttribute("id", "btnDone" + newID);
