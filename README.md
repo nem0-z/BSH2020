@@ -75,7 +75,8 @@ In order to connect to the new database a new file named db.js needs to be added
 ><br/>
 >module.exports = connenction;<br/>
 <br/>
-After that:
+After that:<br/>
+
 > ```sh
 > $ git clone https://github.com/Bicom-Systems-Hackathon/DBM.git
 > $ cd DBM/web
