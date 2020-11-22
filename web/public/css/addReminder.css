@@ -22,16 +22,17 @@ body {
 .modal-content {
   background-color: #fefefe;
   margin: auto;
-  padding: 20px;
+  padding: 40px;
   border: 1px solid #888;
-  width: 33%;
+  width: 60%;
+  height: fit-content;
 }
 
 /* The Close Button */
 .close {
   color: #aaaaaa;
   float: right;
-  font-size: 28px;
+  font-size: 38px;
   font-weight: bold;
 }
 
@@ -75,7 +76,7 @@ body {
   background: white;
   border: 1px solid var(--border);
   border-radius: var(--borderRadius);
-  box-shadow: 0 1rem 1rem -0.75rem var(--border);
+  box-shadow: 1rem 1rem 1rem -0.75rem var(--border);
   display: flex;
   flex-direction: column;
   padding: 1rem;
@@ -127,15 +128,15 @@ label {
 label > span {
   color: var(--borderDarker);
   display: block;
-  font-size: 0.825rem;
-  margin-top: 0.625rem;
+  font-size: 18px;
+  margin: 10px 0;
   order: 1;
   transition: all 0.25s;
 }
 
 label > span.required::after {
   content: "*";
-  color: #dd6666;
+  color: var(--b);
   margin-left: 0.125rem;
 }
 
@@ -271,8 +272,23 @@ input[type="checkbox"] + label span::before {
   outline-offset: 2px;
 }
 
-#submitButton {
-  width: 30%;
+#submitButton,
+#closeNotificationModal {
+  height: 50px;
+  background-color: var(--dg);
+  font-size: 18px;
+  border-radius: 10px;
+  margin-top: 20px;
+  width: 20%;
+  margin-left: 40%;
+  color: var(--w);
+}
+
+#submitButton:hover,
+#closeNotificationModal:hover {
+  background-color: var(--b);
+  color: var(--w);
+  transition: background-color 0.7s ease;
 }
 
 input[type="checkbox"]:checked + label span::after {
@@ -289,4 +305,10 @@ input[type="checkbox"]:checked + label span::after {
   outline: 1px dashed transparent;
   outline-offset: 2px;
   background: hsl(var(--fgColorH), var(--fgColorS), var(--fgColorL));
+}
+
+#notificationName,
+#notificationDescription {
+  font-size: 30px;
+  margin-bottom: 20px;
 }

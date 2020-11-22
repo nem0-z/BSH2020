@@ -8,13 +8,14 @@
       defer
     ></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <link rel="stylesheet" type="text/css" href="/css/colors.css" />
     <link rel="stylesheet" type="text/css" href="/css/map.css" />
   </head>
 
   <body>
     <ul class="places">
       <li>
-        <a style="color: #04aaaa">SHOW ME: </a>
+        <a style="color: var(--w)">SHOW ME: </a>
       </li>
       <div id="types">
         <li><a onclick="setMarkerType(this)">Cafe</a></li>
@@ -31,7 +32,7 @@
         <button
           id="showMarkerBtn"
           class="w3-btn w3-round"
-          style="float: left; background-color: #04aaaa"
+          style=""
           type="submit"
         >
           GO

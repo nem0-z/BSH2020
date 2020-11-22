@@ -1,28 +1,36 @@
 body {
-  background-color: #049494;
+  background-image: url("../wallpaper.png");
+  height: 500px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   text-align: center;
 }
 .main {
-  margin: 5% 10%;
   height: fit-content;
-  width: 80%;
-  border-radius: 32px;
+  width: 40%;
+  margin: auto;
+  margin-top: 100px;
+  border-radius: 15px;
   overflow: hidden;
   background-color: white;
 }
 #returnBtn {
   height: 50px;
-  background-color: #04aaaa;
+  background-color: var(--dg);
   border-radius: 32px;
   font-size: 18px;
   color: white;
   margin: 40px;
   width: 25%;
+  color: var(--g);
 }
 
 #returnBtn:hover {
-  background-color: red;
+  background-color: #a7291a;
   transition: background-color 0.7s ease;
+  color: var(--w);
 }
 
 #comment {

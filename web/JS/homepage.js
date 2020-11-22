@@ -32,8 +32,9 @@ function createReminder(id, idreminder, type, name, description, date, active) {
   const editIcon = document.createElement("i");
   editIcon.setAttribute(
     "class",
-    "fa fa-edit w3-bar-item w3-button w3-white w3-xlarge w3-right"
+    "fa fa-edit w3-bar-item w3-button w3-xlarge w3-right"
   );
+  editIcon.style.backgroundColor = "#ebebeb";
   editIcon.addEventListener("click", function () {
     let dateToEdit = type ? date : "";
     openReminderModal(idreminder, name, description, dateToEdit);

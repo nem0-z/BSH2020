@@ -13,10 +13,10 @@ function addNewTask(
   newTask.setAttribute("class", "taskItem");
   // check if the task is done
   if (resolved) {
-    newTask.style.opacity = "0.5";
+    newTask.style.opacity = "0.6";
   }
   if (urgent) {
-    newTask.style.backgroundColor = "#BD3838";
+    newTask.style.backgroundColor = "#D3E3FE";
   }
   newTask.setAttribute("id", newID);
 
@@ -68,7 +68,7 @@ function addNewTask(
     myBar.innerHTML = "DONE";
   } else {
     myBar.setAttribute("class", "myBar w3-container w3-round myBarInProgress");
-    myBar.innerHTML = "InProgress..";
+    myBar.innerHTML = "In Progress";
   }
   myBar.id = "myBar" + newID;
 

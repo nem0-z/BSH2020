@@ -27,7 +27,6 @@ window.onload = () => {
         );
       });
       if (userRole == 2) {
-        subheader.style.display = "block";
         const leaderBtn = document.getElementById("leaderAddBtn");
         leaderBtn.style.display = "block";
         leaderBtn.addEventListener("click", makeNewTask);

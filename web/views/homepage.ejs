@@ -6,12 +6,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
@@ -20,117 +22,161 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
     <!-- Custom Theme files -->
     <link href="/css/homepage.css" rel="stylesheet" type="text/css" />
+    <link href="/css/colors.css" rel="stylesheet" type="text/css" />
     <link href="/css/font-awesome.css" rel="stylesheet" />
 
-     <!--CSS za Add Reminder modal -->
-	<link rel="stylesheet" href="/css/addReminder.css">
+    <!--CSS za Add Reminder modal -->
+    <link rel="stylesheet" href="/css/addReminder.css" />
 
     <title>TaskMaster</title>
+  </head>
 
-</head>
-
-<body>
+  <body>
     <!-- navigation bar -->
     <%-include('partials/navbar');%>
     <!-- //navigation bar -->
 
     <!-- main -->
     <div class="main-agileits">
-        <div class="container">
+      <div class="container">
+        <button type="button" id="addReminder" class="">
+          <i class="fa fa-plus-circle"></i> ADD REMINDER
+        </button>
 
-            <button type="button" id="addReminder" class="btn btn-primary"><i class="fa fa-plus-circle"></i> ADD
-                REMINDER</button>
-
-            <div class="dropdown">
-                <button class="dropbtn btn"><i class="fa fa-plus-circle"></i> ADD HEATTH REMINDER</button>
-                <div class="dropdown-content">
-                  <a onclick="addHealthReminder('Do simple stretching exercises', 60)">Do simple stretching exercises <i class="fa fa-repeat"> 60 min</i></a>
-                  <a onclick="addHealthReminder('Drink glass of water', 30)">Drink glass of water <i class="fa fa-repeat"> 30 min</i></a>
-                  <a onclick="addHealthReminder('Relax eyes', 10)">Relax eyes <i class="fa fa-repeat"> 10 min</i></a>
-                </div>
-            </div>
-
-            <!-- The Modal -->
-            <div id="myModal" class="modal">
-
-                <!-- Modal content -->
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-
-                    <div id="addRemForm" class="addRemForm" autocomplete="off" role="main">
-                        <div>
-                            <label class="label-name">
-                                <input type="text" id="remName" class="time" name="name" placeholder="Name" tabindex="1"
-                                    required />
-                                <span class="required">Name</span>
-                            </label>
-                        </div>
-
-                        <div>
-                            <label class="label-description">
-                                <input type="text" id="remDescription" class="description" name="description"
-                                    placeholder="Description" tabindex="2" required />
-                                <span class="required">Description</span>
-                            </label>
-                        </div>
-
-                        <div id="unusedForEditingReminder">
-                        <div>
-                            <label class="label-time">
-                                <input type="datetime-local" id="remTime" class="time" name="time" placeholder="Time"
-                                    tabindex="3" required />
-                                <span class="required">Time</span>
-                            </label>
-                        </div>
-                        
-                        <input type="checkbox" class="show-password a11y-hidden" id="buttonRepeating" tabindex="4" />
-                        <label class="label-isRepeating" for="buttonRepeating">
-                            <span>Repeating reminder?</span>
-                        </label>
-
-                        <div>
-                            <label class="label-intervalTime">
-                                <input disabled=true type="number" id="remIntervalTime" class="intervalTime"
-                                    id="intervalTimeInput" name="intervalTimeime" placeholder="Interval" tabindex="5" />
-                                <span>Time Interval (minutes)</span>
-                            </label>
-                        </div>
-                    </div>
-                    </div>
-                    <button type="button" id="submitButton" class="btn btn-primary"><i class="fa fa-plus-circle"></i>
-                        Add</button>
-                </div>
-            </div>
-
-            <div id="reminderNotificationModal" class="modal">
-				<div class="modal-content">
-					<h3 id="notificationName"></h3>
-					<p id="notificationDescription"></p>
-					<button id="closeNotificationModal">Close</button>
-				</div>
-			</div>
-            
-            <!-- Repeating Reminder List -->
-            <h1 class="reminder-title">Repeating reminders</h1>
-            <ul id="repeatingReminderList" class="w3-ul w3-card-4"></ul>
-
-            <!-- Onetime Reminder List -->
-            <h1 class="reminder-title">Onetime reminders</h1>
-            <ul id="onetimeReminderList" class="w3-ul w3-card-4"></ul>
-
-            <!-- Health Reminder List -->
-            <h1 class="reminder-title">Health reminders</h1>
-            <ul id="healthReminderList" class="w3-ul w3-card-4"></ul>
-
+        <div class="dropdown">
+          <button id="healthBtn">
+            <i class="fa fa-plus-circle"></i> ADD HEALTH REMINDER
+          </button>
+          <div class="dropdown-content">
+            <a onclick="addHealthReminder('Do simple stretching exercises', 60)"
+              >Do simple stretching exercises
+              <i class="fa fa-repeat"> 60 min</i></a
+            >
+            <a onclick="addHealthReminder('Drink glass of water', 30)"
+              >Drink glass of water <i class="fa fa-repeat"> 30 min</i></a
+            >
+            <a onclick="addHealthReminder('Relax eyes', 10)"
+              >Relax eyes <i class="fa fa-repeat"> 10 min</i></a
+            >
+          </div>
         </div>
-        <footer>
-            
-        </footer>
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+          <!-- Modal content -->
+          <div class="modal-content">
+            <span class="close">&times;</span>
+
+            <div
+              id="addRemForm"
+              class="addRemForm"
+              autocomplete="off"
+              role="main"
+            >
+              <div>
+                <label class="label-name">
+                  <input
+                    type="text"
+                    id="remName"
+                    class="time"
+                    name="name"
+                    placeholder="Name"
+                    tabindex="1"
+                    required
+                  />
+                  <span class="required">Name</span>
+                </label>
+              </div>
+
+              <div>
+                <label class="label-description">
+                  <input
+                    type="text"
+                    id="remDescription"
+                    class="description"
+                    name="description"
+                    placeholder="Description"
+                    tabindex="2"
+                    required
+                  />
+                  <span class="required">Description</span>
+                </label>
+              </div>
+
+              <div id="unusedForEditingReminder">
+                <div>
+                  <label class="label-time">
+                    <input
+                      type="datetime-local"
+                      id="remTime"
+                      class="time"
+                      name="time"
+                      placeholder="Time"
+                      tabindex="3"
+                      required
+                    />
+                    <span class="required">Time</span>
+                  </label>
+                </div>
+
+                <input
+                  type="checkbox"
+                  class="show-password a11y-hidden"
+                  id="buttonRepeating"
+                  tabindex="4"
+                />
+                <label class="label-isRepeating" for="buttonRepeating">
+                  <span>Repeating reminder?</span>
+                </label>
+
+                <div>
+                  <label class="label-intervalTime">
+                    <input
+                      disabled="true"
+                      type="number"
+                      id="remIntervalTime"
+                      class="intervalTime"
+                      id="intervalTimeInput"
+                      name="intervalTimeime"
+                      placeholder="Interval"
+                      tabindex="5"
+                    />
+                    <span>Time Interval (minutes)</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <button type="button" id="submitButton">
+              Add <i class="fa fa-plus-circle"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="reminderNotificationModal" class="modal">
+          <div class="modal-content">
+            <h3 id="notificationName"></h3>
+            <p id="notificationDescription"></p>
+            <button id="closeNotificationModal">Close</button>
+          </div>
+        </div>
+
+        <!-- Repeating Reminder List -->
+        <h1 class="reminder-title">Repeating reminders</h1>
+        <ul id="repeatingReminderList" class="reminder w3-ul w3-card-4"></ul>
+
+        <!-- Onetime Reminder List -->
+        <h1 class="reminder-title">Onetime reminders</h1>
+        <ul id="onetimeReminderList" class="reminder w3-ul w3-card-4"></ul>
+
+        <!-- Health Reminder List -->
+        <h1 class="reminder-title">Health reminders</h1>
+        <ul id="healthReminderList" class="reminder w3-ul w3-card-4"></ul>
+      </div>
+      <footer></footer>
     </div>
     <!-- //main -->
     <!-- js -->
     <script src="../homepage.js"></script>
     <script src="../sendHttpRequest.js"></script>
-</body>
-
+  </body>
 </html>

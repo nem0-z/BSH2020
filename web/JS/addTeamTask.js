@@ -16,10 +16,10 @@ function addNewTask(
   const newTask = document.createElement("li");
   newTask.setAttribute("class", "taskItem");
   if (resolved) {
-    newTask.style.opacity = "0.5";
+    newTask.style.opacity = "0.6";
   }
   if (urgent) {
-    newTask.style.backgroundColor = "#BD3838";
+    // newTask.style.border = "3px solid #14274e";
   }
   newTask.setAttribute("id", newID);
 
@@ -72,7 +72,7 @@ function addNewTask(
     myBar.innerHTML = "DONE";
   } else {
     myBar.setAttribute("class", "myBar w3-container w3-round myBarInProgress");
-    myBar.innerHTML = "InProgress..";
+    myBar.innerHTML = "In Progress";
   }
   myBar.id = "myBar" + newID;
 

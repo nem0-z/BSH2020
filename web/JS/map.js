@@ -130,7 +130,7 @@ function setMarkerType(event) {
   const parent = event.parentNode.parentNode;
   type = event.innerHTML.toLowerCase();
   for (let i = 1; i < parent.childNodes.length; i += 2) {
-    parent.childNodes[i].firstChild.style.color = "#d3d3d3";
+    parent.childNodes[i].firstChild.style.color = "#9ba4b4";
   }
-  event.style.color = "#04aaaa";
+  event.style.color = "#ebebeb";
 }

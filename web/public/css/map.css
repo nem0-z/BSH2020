@@ -20,7 +20,7 @@ ul {
   padding: 0;
   margin: 0;
   list-style-type: none;
-  background-color: black;
+  background-color: var(--b);
   text-align: center;
 }
 
@@ -37,14 +37,27 @@ li a {
   font-size: 24px;
   font-weight: 400;
   text-decoration: none;
-  color: #d3d3d3;
+  color: var(--g);
 }
 
 li a:hover {
-  color: #04aaaa;
+  color: var(--w);
 }
 
 li .radius {
   width: 100%;
   font-size: 24px;
+}
+
+#showMarkerBtn {
+  border-radius: 32px;
+  color: var(--dg);
+  float: left;
+  background-color: var(--w);
+}
+
+#showMarkerBtn:hover {
+  background-color: var(--dg);
+  color: var(--w);
+  transition: background-color 0.7s ease;
 }
