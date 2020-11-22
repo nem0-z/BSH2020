@@ -4,7 +4,7 @@ const addResponse = require("./addResponse");
 exports.login = function (req, res) {
   const { name, password } = req.body;
   const response_body = {};
-  const query = "select * from user where username=? and password=sha1(?);";
+  const query = "SELECT * FROM user WHERE username=? AND password=SHA1(?);";
   db.query(query, [name, password], function (err, results) {
     if (err) {
       addResponse(response_body, "400", err.message, undefined);
@@ -20,14 +20,12 @@ exports.login = function (req, res) {
         addResponse(response_body, "200", "", results[0]);
       }
     }
-
     res.json(response_body);
   });
 };
 
 exports.mytasks = function (req, res) {
   const response_body = {};
-
   const iduser = req.query.iduser;
 
   const query =
@@ -81,7 +79,6 @@ exports.appendmytask = function (req, res) {
   const { taskID, iduser } = req.body;
   const query = "UPDATE task SET assignee=? WHERE idtask=?;";
 
-  console.log("ovdje");
   db.query(query, [iduser, taskID], (err, results) => {
     if (err) {
       addResponse(response_body, "400", err.message, undefined);
@@ -93,8 +90,8 @@ exports.appendmytask = function (req, res) {
 };
 
 exports.solution = function (req, res) {
-  const { comment, idtask } = req.body;
   const response_body = {};
+  const { comment, idtask } = req.body;
 
   const query1 = "INSERT INTO solution VALUES(null,CURRENT_DATE,?);";
   const query2 = "UPDATE task SET resolved=LAST_INSERT_ID() WHERE idtask=?;";
@@ -115,7 +112,6 @@ exports.solution = function (req, res) {
 
 exports.showsolution = function (req, res) {
   const response_body = {};
-
   const idtask = req.query.idtask;
 
   const query =
@@ -139,6 +135,7 @@ exports.makenewtask = function (req, res) {
   const response_body = {};
   const { title, urgent, assignee, description, iduser, type } = req.body;
   const assigneeName = assignee ? assignee : null;
+
   let assigneeID = null;
   const query1 = "SELECT iduser FROM user WHERE username=?;";
   //First fetch user ID
@@ -170,7 +167,6 @@ exports.makenewtask = function (req, res) {
             if (err) {
               addResponse(response_body, "402", err.message, undefined);
             } else {
-              //Callback hell
               const query3 =
                 "INSERT INTO task VALUES(null,?,null,CURRENT_DATE,LAST_INSERT_ID(),?,?);";
               db.query(query3, [type, assigneeID, urgent], (err, results) => {
@@ -228,43 +224,44 @@ exports.addReminder = function (req, res) {
   const { type, creator, name, description, dateBegin, time } = req.body;
 
   let query =
-    "insert into reminder (idreminder, dateCreated, creator, name, description, dateBegin) values(null, now(), ?, ?, ?, ?);";
+    "INSERT INTO reminder (idreminder, dateCreated, creator, name, description, dateBegin) VALUES(null, NOW(), ?, ?, ?, ?);";
 
-  db.query(query, [creator, name, description, dateBegin], function (
-    err,
-    results
-  ) {
-    if (err) {
-      addResponse(response_body, "400", err.message, undefined);
-      res.json(response_body);
-    } else {
-      if (type) {
-        //onetime
-        query =
-          "insert into onetime (idonetime, idreminder) values (null, last_insert_id());";
-        db.query(query, function (err1, results1) {
-          if (err1) {
-            addResponse(response_body, "401", err.message, undefined);
-          } else {
-            addResponse(response_body, "200", "successful", undefined);
-          }
-          res.json(response_body);
-        });
+  db.query(
+    query,
+    [creator, name, description, dateBegin],
+    function (err, results) {
+      if (err) {
+        addResponse(response_body, "400", err.message, undefined);
+        res.json(response_body);
       } else {
-        //repeating
-        query =
-          "insert into repeating (idrepeating, time, idreminder, active) values (null, ?, last_insert_id(), 1);";
-        db.query(query, [time], function (err1, results1) {
-          if (err1) {
-            addResponse(response_body, "401", err1.message, undefined);
-          } else {
-            addResponse(response_body, "200", "successful", undefined);
-          }
-          res.json(response_body);
-        });
+        if (type) {
+          //onetime
+          query =
+            "INSERT INTO onetime (idonetime, idreminder) VALUES (null, LAST_INSERT_ID());";
+          db.query(query, function (err1, results1) {
+            if (err1) {
+              addResponse(response_body, "401", err.message, undefined);
+            } else {
+              addResponse(response_body, "200", "successful", undefined);
+            }
+            res.json(response_body);
+          });
+        } else {
+          //repeating
+          query =
+            "INSERT INTO repeating (idrepeating, time, idreminder, active) VALUES (null, ?, LAST_INSERT_ID(), 1);";
+          db.query(query, [time], function (err1, results1) {
+            if (err1) {
+              addResponse(response_body, "401", err1.message, undefined);
+            } else {
+              addResponse(response_body, "200", "successful", undefined);
+            }
+            res.json(response_body);
+          });
+        }
       }
     }
-  });
+  );
 };
 exports.calendar = function (req, res) {
   const response_body = {};
@@ -280,7 +277,6 @@ exports.calendar = function (req, res) {
     "YEARWEEK(timeBegin)=YEARWEEK(NOW()) " +
     "AND WEEKDAY(timeBegin) IN (0,1,2,3,4);";
 
-  //const idUser = localStorage.getItem("id");
   const { idUser } = req.query;
 
   db.query(query, [idUser], (err, result) => {
@@ -317,7 +313,6 @@ exports.addtasktocalendar = function (req, res) {
   const eventbegin_ = eventdate + " " + eventbegin;
   const eventend_ = eventdate + " " + eventend;
 
-  // console.log(idtask);
   const query1 = "SELECT idgoal FROM task WHERE idtask=?;";
   const query2 = "INSERT INTO event VALUES(null,?,?,?,?);";
 
@@ -326,7 +321,6 @@ exports.addtasktocalendar = function (req, res) {
       addResponse(response_body, "400", err.message, undefined);
     } else {
       const idgoal = result[0].idgoal;
-      console.log(idgoal);
       db.query(
         query2,
         [eventdate, eventbegin_, eventend_, idgoal],
@@ -347,7 +341,7 @@ exports.editReminder = function (req, res) {
   const response_body = {};
   const { idreminder, name, description } = req.body;
 
-  let query =
+  const query =
     "UPDATE reminder SET name = ?, description = ? WHERE idreminder = ?;";
 
   db.query(query, [name, description, idreminder], function (err, result) {

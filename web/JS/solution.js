@@ -23,7 +23,7 @@ submitButton.addEventListener("click", (e) => {
   if (username === "") {
     alert("Idk who you are");
   } else if (commitURL === "" && userComment === "") {
-    alert("I need either your comment or a commit url");
+    alert("Please comment on your solution or provide a GitHub commit link.");
   } else {
     //Jam commit URL and user comment into one \n separated string
     let comment = "";

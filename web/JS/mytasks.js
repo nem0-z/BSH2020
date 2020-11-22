@@ -5,7 +5,8 @@ window.onload = function () {
   sendHttpRequest("GET", "http://localhost:3000/auth/mytasks?iduser=" + iduser)
     .then((taskList) => {
       //If all good, show each task on html and save data in localStorage
-      //We do this to avoid another query later on -> taskList will be cleared accordingly from localStorage
+      //We do this to avoid another query later on
+      localStorage.removeItem("tList");
       localStorage.setItem("tList", JSON.stringify(taskList));
       taskList.forEach((task) => {
         addNewTask(

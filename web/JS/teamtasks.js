@@ -1,11 +1,11 @@
-var modal = document.getElementById("myModal");
-var idtask;
+const modal = document.getElementById("myModal");
 const submitBtn = document.getElementById("submitBtn");
 const returnBtn = document.getElementById("returnBtn");
 const date = document.getElementById("date");
 const timebegin = document.getElementById("timebegin");
 const timeend = document.getElementById("timeend");
 const subheader = document.getElementById("subheader");
+var idtask;
 
 window.onload = () => {
   const body = document.getElementsByTagName("body")[0];
@@ -51,8 +51,6 @@ function appendToMyTasks(event) {
   modal.style.display = "block";
   idtask = event.target.id.substring(7);
 
-  const btnDone = event.target;
-  const taskItem = btnDone.parentElement.parentElement;
   const iduser = localStorage.getItem("id");
 
   const data = {
