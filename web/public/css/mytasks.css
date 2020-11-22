@@ -1,3 +1,11 @@
+body {
+  background-image: url("../wallpaper.png");
+  height: 500px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 .modal {
   display: none;
   position: fixed;
@@ -13,8 +21,8 @@
   transform: translate(-50%, -50%);
   text-align: center;
   font-size: 30px;
-  background-color: black;
-  color: white;
+  background-color: var(--g);
+  color: black;
 }
 .modal p input {
   margin-top: 50px;
@@ -33,36 +41,31 @@
 #returnBtn,
 #leaderAddBtn {
   height: 50px;
-  background-color: #04aaaa;
+  background-color: var(--dg);
   border-radius: 32px;
   font-size: 18px;
   color: white;
   margin: 40px;
   width: 25%;
+  color: var(--w);
 }
 #submitBtn:hover {
-  background-color: black;
-  color: #04aaaa;
+  background-color: var(--b);
+  color: var(--w);
   transition: background-color 0.7s ease;
 }
 #returnBtn:hover {
-  background-color: red;
+  background-color: #a7291a;
   transition: background-color 0.7s ease;
+  color: var(--w);
 }
 
 #leaderAddBtn:hover {
-  background-color: black;
-  color: #04aaaa;
+  background-color: var(--b);
+  color: var(--w);
   transition: background-color 0.7s ease;
-  border: solid 1px#04aaaa;
+  border: solid 1px var(--w);
 }
-.subheader {
-  text-align: center;
-  padding: 20px;
-  border-bottom: #000000 solid 2px;
-  background-color: black;
-}
-
 body {
   font-family: Verdana, sans-serif;
 }
@@ -94,7 +97,7 @@ ul {
 
 .myBarInProgress {
   width: 35%;
-  background-color: #04aaaa;
+  background-color: var(--dg);
   color: white;
   font-weight: 600;
   font-size: 18px;
@@ -106,11 +109,12 @@ ul {
   padding: 0;
   display: inline-block;
   list-style-type: disc;
-  width: 40%;
+  width: 35%;
   overflow: hidden;
-  background-color: #c0c0c0;
-  margin: 4%;
-  border: 2px solid black;
+  background-color: var(--w);
+  margin: 30px 7%;
+  border: 2px solid var(--dg);
+  border-radius: 10px;
 }
 
 .container img {
@@ -121,8 +125,8 @@ ul {
 .container .taskName {
   font-size: 28px;
   font-weight: 800;
-  font-style: oblique;
   text-align: center;
+  color: var(--b);
 }
 
 .taskHeader {
@@ -131,15 +135,18 @@ ul {
 }
 
 .taskID {
-  font-size: 18px;
+  font-size: 28px;
+  color: var(--b);
 }
 
 .taskDescription {
   margin: 15px;
+  margin-top: 20px;
+  font-size: 18px;
 }
 
 .creator {
-  line-height: 1.5;
+  line-height: 2;
   box-sizing: inherit;
   font-size: 18px !important;
   display: block;
@@ -164,9 +171,8 @@ ul {
 
 .btnDone {
   margin-left: 15px;
-  font-weight: 800;
-  background-color: #05847c !important;
-  color: white !important;
+  background-color: var(--b) !important;
+  color: var(--w) !important;
 }
 
 .w3-white {

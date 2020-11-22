@@ -1,11 +1,15 @@
+body {
+  background-image: url("../wallpaper.png");
+}
 .login-agileits-top p {
   text-align: left;
 }
 .login-form {
   height: 300px;
-  border-radius: 32px;
   text-align: center;
-  background-color: white !important;
+  background-color: var(--w) !important;
+  border-radius: 10px;
+  box-shadow: 0 0 30px black;
 }
 
 #inputUsername,
@@ -21,11 +25,13 @@
 
 #submitButton {
   height: 50px;
-  background-color: #04aaaa;
-  border-radius: 32px;
+  background-color: var(--dg);
   font-size: 18px;
+  border-radius: 10px;
 }
 
 #submitButton:hover {
-  background-color: black;
+  background-color: var(--b);
+  color: var(--w);
+  transition: background-color 0.7s ease;
 }

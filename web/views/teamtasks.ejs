@@ -9,6 +9,7 @@
 
     <!-- Custom Theme files -->
     <link href="/css/mytasks.css" rel="stylesheet" type="text/css" />
+    <link href="/css/colors.css" rel="stylesheet" />
     <link href="/css/font-awesome.css" rel="stylesheet" />
 
     <title>TeamTasks</title>
@@ -20,15 +21,14 @@
 
     <!-- main -->
     <div class="main-agileits">
-      <div id="subheader" class="subheader" style="display: none;">
         <button
           onclick="makeNewTask()"
           id="leaderAddBtn"
           class="w3-btn w3-round"
+          style="margin: 40px auto;display: none;"
         >
           Create New Task
         </button>
-      </div>
       <div class="container">
         <!-- Lista za taskove-->
         <ul id="myTasksList"></ul>

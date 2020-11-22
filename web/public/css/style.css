@@ -181,15 +181,12 @@ body {
   margin-top: 100px;
 }
 h1 {
-  font-size: 56px;
+  font-size: 80px;
   text-align: center;
   color: #fff;
   font-weight: 300;
 }
-h1:hover {
-  font-size: 60px;
-  font-weight: 200;
-}
+
 /*-- main --*/
 .main-agileits {
   padding: 2em 0 0;
@@ -238,8 +235,8 @@ h1:hover {
 .login-form input[type="submit"] {
   font-size: 1em;
   color: #fff;
-  background: #00bcd4;
-  border: 1px solid #00bcd4;
+  background: var(--dg);
+  border: 1px solid var(--dg);
   outline: none;
   cursor: pointer;
   padding: 0.7em 1em;
@@ -254,7 +251,7 @@ h1:hover {
 }
 .login-form input[type="submit"]:hover {
   background: transparent;
-  color: #00bcd4;
+  color: var(--w);
   transition: 0.5s all;
   -webkit-transition: 0.5s all;
   -moz-transition: 0.5s all;
