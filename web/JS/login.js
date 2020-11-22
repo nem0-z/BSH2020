@@ -6,8 +6,8 @@ submitButton.addEventListener("click", function (e) {
   e.preventDefault();
 
   //Parse user input
-  let username = inputUsername.value;
-  let password = inputPassword.value;
+  const username = inputUsername.value;
+  const password = inputPassword.value;
 
   if (username != "" && password != "") {
     var data = {

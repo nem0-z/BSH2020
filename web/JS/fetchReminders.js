@@ -1,9 +1,12 @@
-function fetchReminders(){
-const idUser = localStorage.getItem("id");
+function fetchReminders() {
+  const idUser = localStorage.getItem("id");
 
-sendHttpRequest("GET","http://localhost:3000/auth/calendarReminder?idUser=" + idUser)
-.then(responseData=>{
-    responseData.forEach((element)=>{
+  sendHttpRequest(
+    "GET",
+    "http://localhost:3000/auth/calendarReminder?idUser=" + idUser
+  )
+    .then((responseData) => {
+      responseData.forEach((element) => {
         addCalendarEvent(
           element.name,
           element.description,
@@ -14,11 +17,11 @@ sendHttpRequest("GET","http://localhost:3000/auth/calendarReminder?idUser=" + id
           element.day,
           element.urgency
         );
-      })
-      calendarMain(); 
+      });
+      calendarMain();
       limitCalendarToWeek();
-      adjustReminderSize();
-}).catch(error => {
-    alert(error);
-});
+    })
+    .catch((error) => {
+      alert(error);
+    });
 }
