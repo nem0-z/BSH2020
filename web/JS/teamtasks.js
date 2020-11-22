@@ -8,6 +8,8 @@ const timeend = document.getElementById("timeend");
 const subheader = document.getElementById("subheader");
 
 window.onload = () => {
+  const body = document.getElementsByTagName("body")[0];
+  body.style.backgroundImage = "url('../wallpaper1.jpg')";
   const userRole = localStorage.getItem("role");
   sendHttpRequest("POST", "http://localhost:3000/auth/teamtasks")
     .then((taskList) => {

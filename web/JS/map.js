@@ -134,3 +134,8 @@ function setMarkerType(event) {
   }
   event.style.color = "#ebebeb";
 }
+
+const returnBtn = document.getElementById("returnBtn");
+returnBtn.addEventListener("click", () => {
+  window.location.assign("/home");
+});

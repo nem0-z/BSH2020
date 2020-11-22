@@ -19,7 +19,7 @@ function addNewTask(
     newTask.style.opacity = "0.6";
   }
   if (urgent) {
-    // newTask.style.border = "3px solid #14274e";
+    newTask.style.backgroundColor = "#acb4c5";
   }
   newTask.setAttribute("id", newID);
 
