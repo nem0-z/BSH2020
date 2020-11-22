@@ -16,7 +16,7 @@ function addNewTask(
     newTask.style.opacity = "0.6";
   }
   if (urgent) {
-    newTask.style.backgroundColor = "#D3E3FE";
+    newTask.style.backgroundColor = "#acb4c5";
   }
   newTask.setAttribute("id", newID);
 

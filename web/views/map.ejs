@@ -15,7 +15,12 @@
   <body>
     <ul class="places">
       <li>
-        <a style="color: var(--w)">SHOW ME: </a>
+        <button id="returnBtn" class="w3-btn w3-round" type="submit">
+          BACK
+        </button>
+      </li>
+      <li>
+        <a style="margin-left: 30px; color: var(--w)">SHOW ME: </a>
       </li>
       <div id="types">
         <li><a onclick="setMarkerType(this)">Cafe</a></li>
@@ -29,12 +34,7 @@
         <input id="radius" class="radius" placeholder="Enter radius" />
       </li>
       <li>
-        <button
-          id="showMarkerBtn"
-          class="w3-btn w3-round"
-          style=""
-          type="submit"
-        >
+        <button id="showMarkerBtn" class="w3-btn w3-round" type="submit">
           GO
         </button>
       </li>
