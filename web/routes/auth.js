@@ -12,10 +12,10 @@ router.route("/makenewtask").post(controller.makenewtask);
 router.route("/getOnetimeReminders").get(controller.getOnetimeReminders);
 router.route("/getRepeatingReminders").get(controller.getRepeatingReminders);
 router.route("/addReminder").post(controller.addReminder);
-router.route("/calendar").post(controller.calendar);
+router.route("/calendar").get(controller.calendar);
 router.route("/changeReminderActivity").put(controller.changeReminderActivity);
 router.route("/addtasktocalendar").post(controller.addtasktocalendar);
 router.route('/editReminder').put(controller.editReminder);
-router.route("/calendarReminder").post(controller.calendarReminder);
+router.route("/calendarReminder").get(controller.calendarReminder);
 
 module.exports = router;

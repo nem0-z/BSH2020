@@ -282,7 +282,7 @@ exports.calendar = function (req, res) {
     "AND WEEKDAY(timeBegin) IN (0,1,2,3,4);";
 
   //const idUser = localStorage.getItem("id");
-  const { idUser } = req.body;
+  const { idUser } = req.query;
 
   db.query(query, [idUser], (err, result) => {
     if (err) {
@@ -373,7 +373,7 @@ exports.calendarReminder = function (req, res) {
     "YEARWEEK(dateBegin)=YEARWEEK(NOW()) " +
     "AND WEEKDAY(dateBegin) IN (0,1,2,3,4);";
 
-  const { idUser } = req.body;
+  const idUser = req.query.idUser;
 
   db.query(query, [idUser], (err, result) => {
     if (err) {
