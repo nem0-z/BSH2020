@@ -6,15 +6,15 @@ var radius;
 var type;
 var isOpen = false;
 
-function initMap(myRadius, myType) {
+function initMap(myRadius, myType, myLocation) {
   infowindow = new google.maps.InfoWindow();
   map = new google.maps.Map(document.getElementById("map"), {
     zoom: 15,
   });
 
   var request = {
-    query: "stupine",
-    fields: ["name", "geometry"],
+    query: isOpen ? myLocation : "Tuzla",
+    fields: ["geometry"],
   };
 
   service = new google.maps.places.PlacesService(map);
@@ -43,12 +43,13 @@ function initMap(myRadius, myType) {
 }
 const showMarkerBtn = document.getElementById("showMarkerBtn");
 showMarkerBtn.addEventListener("click", (e) => {
-  radius = document.getElementById("radius").value;
-  if (!radius || !type) {
-    alert("Please select type and radius.");
+  const rad = document.getElementById("radius").value;
+  const loc = document.getElementById("location").value;
+  if (!rad || !type || !loc) {
+    alert("Please select type ,radius and location");
   } else {
     isOpen = true;
-    initMap(parseInt(radius), type);
+    initMap(parseInt(rad), type, loc);
   }
 });
 

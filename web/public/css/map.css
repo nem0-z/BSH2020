@@ -27,7 +27,7 @@ ul {
 li {
   vertical-align: auto;
   float: left;
-  padding-left: 45px;
+  padding-left: 35px;
   padding-top: 35px;
   display: inline;
 }
@@ -45,8 +45,8 @@ li a:hover {
 }
 
 li .radius {
-  width: 100%;
-  font-size: 24px;
+  width: 80%;
+  font-size: 20px;
 }
 
 #showMarkerBtn,
