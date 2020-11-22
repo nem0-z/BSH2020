@@ -230,42 +230,41 @@ exports.addReminder = function (req, res) {
   let query =
     "insert into reminder (idreminder, dateCreated, creator, name, description, dateBegin) values(null, now(), ?, ?, ?, ?);";
 
-  db.query(
-    query,
-    [creator, name, description, dateBegin],
-    function (err, results) {
-      if (err) {
-        addResponse(response_body, "400", err.message, undefined);
-        res.json(response_body);
+  db.query(query, [creator, name, description, dateBegin], function (
+    err,
+    results
+  ) {
+    if (err) {
+      addResponse(response_body, "400", err.message, undefined);
+      res.json(response_body);
+    } else {
+      if (type) {
+        //onetime
+        query =
+          "insert into onetime (idonetime, idreminder) values (null, last_insert_id());";
+        db.query(query, function (err1, results1) {
+          if (err1) {
+            addResponse(response_body, "401", err.message, undefined);
+          } else {
+            addResponse(response_body, "200", "successful", undefined);
+          }
+          res.json(response_body);
+        });
       } else {
-        if (type) {
-          //onetime
-          query =
-            "insert into onetime (idonetime, idreminder) values (null, last_insert_id());";
-          db.query(query, function (err1, results1) {
-            if (err1) {
-              addResponse(response_body, "401", err.message, undefined);
-            } else {
-              addResponse(response_body, "200", "successful", undefined);
-            }
-            res.json(response_body);
-          });
-        } else {
-          //repeating
-          query =
-            "insert into repeating (idrepeating, time, idreminder, active) values (null, ?, last_insert_id(), 1);";
-          db.query(query, [time], function (err1, results1) {
-            if (err1) {
-              addResponse(response_body, "401", err1.message, undefined);
-            } else {
-              addResponse(response_body, "200", "successful", undefined);
-            }
-            res.json(response_body);
-          });
-        }
+        //repeating
+        query =
+          "insert into repeating (idrepeating, time, idreminder, active) values (null, ?, last_insert_id(), 1);";
+        db.query(query, [time], function (err1, results1) {
+          if (err1) {
+            addResponse(response_body, "401", err1.message, undefined);
+          } else {
+            addResponse(response_body, "200", "successful", undefined);
+          }
+          res.json(response_body);
+        });
       }
     }
-  );
+  });
 };
 exports.calendar = function (req, res) {
   const response_body = {};
@@ -327,6 +326,7 @@ exports.addtasktocalendar = function (req, res) {
       addResponse(response_body, "400", err.message, undefined);
     } else {
       const idgoal = result[0].idgoal;
+      console.log(idgoal);
       db.query(
         query2,
         [eventdate, eventbegin_, eventend_, idgoal],
@@ -382,5 +382,32 @@ exports.calendarReminder = function (req, res) {
       addResponse(response_body, "200", "DBM", result);
     }
     res.json(response_body);
+  });
+};
+
+exports.checktaskincalendar = function (req, res) {
+  const response_body = {};
+  const { idtask } = req.body;
+
+  const query1 = "SELECT idgoal FROM task WHERE idtask=?;";
+  const query2 = "SELECT idgoal FROM event WHERE idgoal=?;";
+
+  db.query(query1, [idtask], (err, result) => {
+    if (err) {
+      addResponse(response_body, "401", err.message, null);
+    } else {
+      const idgoal = result[0].idgoal;
+      db.query(query2, [idgoal], (err, result) => {
+        if (err) {
+          addResponse(response_body, "401", err.message, null);
+        }
+        if (result.length === 0) {
+          addResponse(response_body, "200", "No tasks", undefined);
+        } else {
+          addResponse(response_body, "200", "", result);
+        }
+        res.json(response_body);
+      });
+    }
   });
 };

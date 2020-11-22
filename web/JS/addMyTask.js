@@ -107,9 +107,19 @@ function addNewTask(
     btnDone.addEventListener("click", addSolution);
     btnDone.innerHTML = "Add Solution";
   }
-
   time.appendChild(date);
   time.appendChild(btnDone);
+
+  if (resolved == null) {
+    const addToCalBtn = document.createElement("button");
+    addToCalBtn.setAttribute("class", "w3-btn w3-round-xxlarge btnDone");
+    addToCalBtn.setAttribute("id", "addToCalBtn" + newID);
+    addToCalBtn.addEventListener("click", addToCalendar);
+    addToCalBtn.innerHTML = "Add To Calendar";
+    addToCalBtn.style.width = "fit-content";
+    time.appendChild(addToCalBtn);
+  }
+
   newTask.appendChild(time);
 
   myTasksList.appendChild(newTask);

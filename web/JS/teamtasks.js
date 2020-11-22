@@ -95,7 +95,6 @@ submitBtn.addEventListener("click", (e) => {
       eventend: eventend,
       idtask: idtask,
     };
-    console.log(data);
     sendHttpRequest(
       "POST",
       "http://localhost:3000/auth/addtasktocalendar",

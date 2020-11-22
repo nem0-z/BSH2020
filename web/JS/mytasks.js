@@ -1,3 +1,4 @@
+const modal = document.getElementById("myModal");
 //Execute on page open
 window.onload = function () {
   const iduser = localStorage.getItem("id");
@@ -43,3 +44,67 @@ function showSolution(event) {
   localStorage.setItem("taskID", taskID);
   window.location.assign("/showsolution");
 }
+
+function addToCalendar(event) {
+  event.preventDefault();
+  const addToCalBtn = event.target;
+  const taskItem = addToCalBtn.parentElement.parentElement;
+  const taskID = taskItem.id;
+  localStorage.setItem("taskID", taskID);
+
+  const data = {
+    idtask: taskID,
+  };
+
+  sendHttpRequest(
+    "POST",
+    "http://localhost:3000/auth/checktaskincalendar",
+    data
+  )
+    .then((responseData) => {
+      console.log(responseData);
+      if (responseData === undefined) {
+        modal.style.display = "block";
+      } else {
+        alert("Task is already in calendar.");
+      }
+    })
+    .catch((error) => alert(error));
+}
+
+const submitBtn = document.getElementById("submitBtn");
+submitBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  const eventdate = date.value;
+  const eventbegin = timebegin.value;
+  const eventend = timeend.value;
+
+  if (eventdate === "" || eventbegin === "" || eventend === "") {
+    alert("Empty fields!");
+  } else {
+    const data = {
+      eventdate: eventdate,
+      eventbegin: eventbegin,
+      eventend: eventend,
+      idtask: localStorage.getItem("taskID"),
+    };
+    sendHttpRequest(
+      "POST",
+      "http://localhost:3000/auth/addtasktocalendar",
+      data
+    )
+      .then((responseData) => {
+        console.log(responseData);
+        modal.style.display = "none";
+        // location.reload();
+      })
+      .catch((error) => alert(error));
+  }
+});
+
+const returnBtn = document.getElementById("returnBtn");
+returnBtn.addEventListener("click", () => {
+  modal.style.display = "none";
+  location.reload();
+});
