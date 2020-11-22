@@ -9,7 +9,7 @@ const subheader = document.getElementById("subheader");
 
 window.onload = () => {
   const userRole = localStorage.getItem("role");
-  sendHttpRequest("POST", "http://localhost:3000/auth/teamtasks")
+  sendHttpRequest("GET", "http://localhost:3000/auth/teamtasks")
     .then((taskList) => {
       //Show each task on html if query went through
       taskList.forEach((task) => {

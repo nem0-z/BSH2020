@@ -7,10 +7,7 @@ const returnButton = document.getElementById("returnBtn");
 //Execute on page open
 window.onload = function () {
   const idtask = localStorage.getItem("taskID");
-  const data = {
-    idtask,
-  };
-  sendHttpRequest("POST", "http://localhost:3000/auth/showsolution", data)
+  sendHttpRequest("GET", "http://localhost:3000/auth/showsolution?idtask=" + idtask)
     .then((responseData) => {
       //If all good then show solution in another html
       const len = responseData.length - 1;
