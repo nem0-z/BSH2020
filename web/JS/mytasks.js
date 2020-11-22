@@ -1,10 +1,7 @@
 //Execute on page open
 window.onload = function () {
   const iduser = localStorage.getItem("id");
-  const data = {
-    iduser,
-  };
-  sendHttpRequest("POST", "http://localhost:3000/auth/mytasks", data)
+  sendHttpRequest("GET", "http://localhost:3000/auth/mytasks?iduser=" + iduser)
     .then((taskList) => {
       //If all good, show each task on html and save data in localStorage
       //We do this to avoid another query later on -> taskList will be cleared accordingly from localStorage

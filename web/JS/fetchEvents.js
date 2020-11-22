@@ -1,6 +1,5 @@
 const idUser = localStorage.getItem("id");
-const data = { idUser: idUser };
-sendHttpRequest("POST","http://localhost:3000/auth/calendar",data)
+sendHttpRequest("GET","http://localhost:3000/auth/calendar?idUser=" + idUser)
 .then(responseData=>{
     responseData.forEach((element)=>{
         addCalendarEvent(

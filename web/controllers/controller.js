@@ -28,7 +28,7 @@ exports.login = function (req, res) {
 exports.mytasks = function (req, res) {
   const response_body = {};
 
-  const iduser = req.body.iduser;
+  const iduser = req.query.iduser;
 
   const query =
     "SELECT goal.*, task.*, user.username as taskCreator FROM goal INNER JOIN task " +
@@ -81,6 +81,7 @@ exports.appendmytask = function (req, res) {
   const { taskID, iduser } = req.body;
   const query = "UPDATE task SET assignee=? WHERE idtask=?;";
 
+  console.log("ovdje");
   db.query(query, [iduser, taskID], (err, results) => {
     if (err) {
       addResponse(response_body, "400", err.message, undefined);
@@ -115,7 +116,7 @@ exports.solution = function (req, res) {
 exports.showsolution = function (req, res) {
   const response_body = {};
 
-  const idtask = req.body.idtask;
+  const idtask = req.query.idtask;
 
   const query =
     "SELECT * FROM solution INNER JOIN task ON solution.idsolution = task.resolved INNER JOIN user ON task.assignee= user.iduser WHERE idtask=?;";
@@ -281,7 +282,7 @@ exports.calendar = function (req, res) {
     "AND WEEKDAY(timeBegin) IN (0,1,2,3,4);";
 
   //const idUser = localStorage.getItem("id");
-  const { idUser } = req.body;
+  const { idUser } = req.query;
 
   db.query(query, [idUser], (err, result) => {
     if (err) {
@@ -372,7 +373,7 @@ exports.calendarReminder = function (req, res) {
     "YEARWEEK(dateBegin)=YEARWEEK(NOW()) " +
     "AND WEEKDAY(dateBegin) IN (0,1,2,3,4);";
 
-  const { idUser } = req.body;
+  const idUser = req.query.idUser;
 
   db.query(query, [idUser], (err, result) => {
     if (err) {

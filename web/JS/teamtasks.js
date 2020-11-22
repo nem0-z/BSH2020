@@ -11,7 +11,7 @@ window.onload = () => {
   const body = document.getElementsByTagName("body")[0];
   body.style.backgroundImage = "url('../wallpaper1.jpg')";
   const userRole = localStorage.getItem("role");
-  sendHttpRequest("POST", "http://localhost:3000/auth/teamtasks")
+  sendHttpRequest("GET", "http://localhost:3000/auth/teamtasks")
     .then((taskList) => {
       //Show each task on html if query went through
       taskList.forEach((task) => {
