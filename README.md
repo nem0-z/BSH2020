@@ -54,6 +54,28 @@ In the making of **TimeMaster** we used a few open source solutions. You can tak
 ---
 # How to run TimeMaster
 In order to run **TimeMaster** you'll need Node.js, MySQL and git installed on your system.
+After you have everything installed the next step is to run the SQL Script scheme.sql that is located in DBM/db.
+In order to connect to the new database a new file named db.js needs to be added in DBM/web/controllers with the following contents:
+>const mysql = require('mysql');<br/>
+><br/>
+>const connenction = mysql.createConnection({<br/>
+>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; host: "localhost",<br/>
+>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user: "root",<br/>
+>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password: "root",<br/>
+>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;database: "TimeMaster"<br/>
+>});<br/>
+><br/>
+>connenction.connect(function (err) {<br/>
+>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (err) {<br/>
+>       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; console.log(err);<br/>
+>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else {<br/>
+>       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; console.log("db connected");<br/>
+>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br/>
+>});<br/>
+><br/>
+>module.exports = connenction;<br/>
+<br/>
+After that:
 > ```sh
 > $ git clone https://github.com/Bicom-Systems-Hackathon/DBM.git
 > $ cd DBM/web
