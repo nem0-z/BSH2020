@@ -7,40 +7,39 @@ var type;
 var isOpen = false;
 
 function initMap(myRadius, myType) {
-  if (isOpen) {
-    infowindow = new google.maps.InfoWindow();
-    map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 15,
-    });
+  infowindow = new google.maps.InfoWindow();
+  map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 15,
+  });
 
-    var request = {
-      query: "stupine",
-      fields: ["name", "geometry"],
-    };
+  var request = {
+    query: "stupine",
+    fields: ["name", "geometry"],
+  };
 
-    service = new google.maps.places.PlacesService(map);
-    service.findPlaceFromQuery(request, function (result, status) {
-      if (status === google.maps.places.PlacesServiceStatus.OK) {
-        const marker = createMarker(result[0], false, undefined); //potentially this could be 'you are here!' marker
-        const latitude = result[0].geometry.location.lat();
-        const longitude = result[0].geometry.location.lng();
-        console.log(myRadius, myType);
-        const place = {
-          location: new google.maps.LatLng(latitude, longitude),
-          radius: myRadius,
-          type: myType,
-        };
-        map.setCenter(result[0].geometry.location);
-        var circle = new google.maps.Circle({
-          map: map,
-          radius: myRadius,
-          fillColor: "#b3b3ba",
-        });
-        circle.bindTo("center", marker, "position");
+  service = new google.maps.places.PlacesService(map);
+  service.findPlaceFromQuery(request, function (result, status) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+      const marker = createMarker(result[0], false, undefined); //potentially this could be 'you are here!' marker
+      const latitude = result[0].geometry.location.lat();
+      const longitude = result[0].geometry.location.lng();
+      const place = {
+        location: new google.maps.LatLng(latitude, longitude),
+        radius: isOpen ? myRadius : 1000,
+        type: myType,
+      };
+      map.setCenter(result[0].geometry.location);
+      var circle = new google.maps.Circle({
+        map: map,
+        radius: isOpen ? myRadius : 1000,
+        fillColor: "#b3b3ba",
+      });
+      circle.bindTo("center", marker, "position");
+      if (isOpen) {
         findAccessPoints(place);
       }
-    });
-  }
+    }
+  });
 }
 const showMarkerBtn = document.getElementById("showMarkerBtn");
 showMarkerBtn.addEventListener("click", (e) => {
