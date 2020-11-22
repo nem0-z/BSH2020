@@ -16,20 +16,28 @@ submitButton.addEventListener("click", (e) => {
   const description = document.getElementById("comment").value;
   const iduser = localStorage.getItem("id");
 
-  const data = {
-    title: title,
-    urgent: urgent ? 1 : 0,
-    assignee: assignee,
-    description: description,
-    iduser: iduser,
-    type: type,
-  };
+  if (type == null) {
+    alert("Select type of task.");
+  }
+  else if (title == "") {
+    alert("New task has to have a title.")
+  }
+  else {
+    const data = {
+      title: title,
+      urgent: urgent ? 1 : 0,
+      assignee: assignee,
+      description: description,
+      iduser: iduser,
+      type: type,
+    };
 
-  sendHttpRequest("POST", "http://localhost:3000/auth/makenewtask", data)
-    .then((responseData) => {
-      window.location.replace("/teamtasks");
-    })
-    .catch((error) => alert(error));
+    sendHttpRequest("POST", "http://localhost:3000/auth/makenewtask", data)
+      .then((responseData) => {
+        window.location.replace("/teamtasks");
+      })
+      .catch((error) => alert(error));
+  }
 });
 
 returnButton.addEventListener("click", (e) => {
